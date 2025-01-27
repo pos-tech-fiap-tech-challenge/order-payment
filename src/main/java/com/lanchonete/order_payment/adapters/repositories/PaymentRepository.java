@@ -1,4 +1,4 @@
-package com.lanchonete.order_payment.infrastructure.persistence;
+package com.lanchonete.order_payment.adapters.repositories;
 
 import com.lanchonete.order_payment.adapters.entities.PaymentEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
