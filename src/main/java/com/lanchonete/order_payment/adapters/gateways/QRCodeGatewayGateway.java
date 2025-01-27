@@ -5,14 +5,14 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.lanchonete.order_payment.core.usecase.interfaces.QRCodeGeneration;
+import com.lanchonete.order_payment.core.usecase.interfaces.out.QRCodeGenerationGateway;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 @Service
-public class QRCodeGateway implements QRCodeGeneration {
+public class QRCodeGatewayGateway implements QRCodeGenerationGateway {
 
     @Override
     public byte[] generateQRCodeImage(String text, int width, int height)  {

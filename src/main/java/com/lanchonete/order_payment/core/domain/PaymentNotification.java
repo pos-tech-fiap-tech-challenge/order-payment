@@ -1,7 +1,6 @@
-package com.lanchonete.order_payment.core.model;
+package com.lanchonete.order_payment.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 
 public record PaymentNotification(
     @JsonProperty("data")

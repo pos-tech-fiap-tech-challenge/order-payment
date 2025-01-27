@@ -7,9 +7,8 @@ import com.lanchonete.order_payment.adapters.dto.QRCodeData;
 import com.lanchonete.order_payment.adapters.dto.mercadopago.MercadoPagoItem;
 import com.lanchonete.order_payment.adapters.dto.mercadopago.MercadoPagoOrder;
 import com.lanchonete.order_payment.adapters.dto.mercadopago.MercadoPagoOrderData;
-import com.lanchonete.order_payment.core.model.OrderSnackPaymentStatus;
-import com.lanchonete.order_payment.core.usecase.interfaces.PaymentGateway;
-import lombok.AllArgsConstructor;
+import com.lanchonete.order_payment.core.domain.OrderSnackPaymentStatus;
+import com.lanchonete.order_payment.core.usecase.interfaces.out.PaymentGateway;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -45,9 +44,9 @@ public class MercadoPagoIntegrationGateway implements PaymentGateway {
     }
 
     @Override
-    public QRCodeData requestQrData(OrderSnackDTO order, UUID externalReference) {
+    public QRCodeData requestQrData(OrderSnackDTO order) {
         String fullUrl = url + "/" + path + "?access_token=" + accessToken;
-        MercadoPagoOrder mercadoPagoOrder = convert(order, externalReference);
+        MercadoPagoOrder mercadoPagoOrder = convert(order);
 
         try {
             log.info("Requesting QRCode data to MercadoPago with order - {}", new ObjectMapper().writeValueAsString(mercadoPagoOrder));
@@ -61,11 +60,11 @@ public class MercadoPagoIntegrationGateway implements PaymentGateway {
         }
     }
 
-    public MercadoPagoOrder convert(OrderSnackDTO orderSnack, UUID externalReference) {
+    public MercadoPagoOrder convert(OrderSnackDTO orderSnack) {
         MercadoPagoOrder mercadoPagoOrder = new MercadoPagoOrder();
         mercadoPagoOrder.setDescription(DEFAULT_DESCRIPTION);
         mercadoPagoOrder.setTitle(DEFAULT_DESCRIPTION);
-        mercadoPagoOrder.setExternalReference(String.valueOf(externalReference));
+        mercadoPagoOrder.setExternalReference(String.valueOf(orderSnack.getOrderSnackId()));
         mercadoPagoOrder.setTotalAmount(orderSnack.getTotalPrice());
         mercadoPagoOrder.setNotificationUrl(notificationUrl);
 

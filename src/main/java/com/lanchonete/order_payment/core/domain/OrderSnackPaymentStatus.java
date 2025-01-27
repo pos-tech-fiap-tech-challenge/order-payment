@@ -1,4 +1,4 @@
-package com.lanchonete.order_payment.core.model;
+package com.lanchonete.order_payment.core.domain;
 
 
 import lombok.AllArgsConstructor;

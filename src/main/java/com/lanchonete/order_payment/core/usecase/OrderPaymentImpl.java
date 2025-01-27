@@ -3,36 +3,65 @@ package com.lanchonete.order_payment.core.usecase;
 
 import com.lanchonete.order_payment.adapters.dto.OrderSnackDTO;
 import com.lanchonete.order_payment.adapters.dto.QRCodeData;
-import com.lanchonete.order_payment.core.model.PaymentNotification;
-import com.lanchonete.order_payment.core.usecase.interfaces.OrderPaymentUseCase;
-import com.lanchonete.order_payment.core.usecase.interfaces.PaymentOrderPersistence;
-import com.lanchonete.order_payment.core.usecase.interfaces.PaymentGateway;
-import com.lanchonete.order_payment.core.usecase.interfaces.QRCodeGeneration;
+import com.lanchonete.order_payment.core.domain.Payment;
+import com.lanchonete.order_payment.core.enums.PaymentStatus;
+import com.lanchonete.order_payment.core.domain.OrderSnackPaymentStatus;
+import com.lanchonete.order_payment.core.domain.PaymentNotification;
+import com.lanchonete.order_payment.core.usecase.interfaces.in.OrderPaymentUseCase;
+import com.lanchonete.order_payment.core.usecase.interfaces.out.PaymentOrderRepository;
+import com.lanchonete.order_payment.core.usecase.interfaces.out.PaymentGateway;
+import com.lanchonete.order_payment.core.usecase.interfaces.out.QRCodeGenerationGateway;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
+@Slf4j
 @Service
 @AllArgsConstructor
 public class OrderPaymentImpl implements OrderPaymentUseCase {
-    private final PaymentGateway paymentIntegration;
-    private final QRCodeGeneration qrCodeGeneration;
-    private final PaymentOrderPersistence paymentOrderPersistence;
+    private final PaymentGateway paymentGateway;
+    private final QRCodeGenerationGateway qrCodeGenerationGateway;
+    private final PaymentOrderRepository paymentOrderRepository;
 
     @Override
     public byte[] requestPayment(OrderSnackDTO orderSnackRequest) {
-        UUID externalReference = UUID.randomUUID();
+        QRCodeData qrData = paymentGateway.requestQrData(orderSnackRequest);
+        byte[] qrCodeImg = qrCodeGenerationGateway.generateQRCodeImage(qrData.qrData(), 250, 250);
 
-        QRCodeData qrData = paymentIntegration.requestQrData(orderSnackRequest, externalReference);
-        byte[] qrCodeImg = qrCodeGeneration.generateQRCodeImage(qrData.qrData(), 250, 250);
-        paymentOrderPersistence.savePaymentOrder(orderSnackRequest, externalReference);
+        var paymentSave = Payment
+                .builder()
+                .paymentGateway(orderSnackRequest.getPaymentGateway())
+                .paymentStatus(PaymentStatus.OPPENED)
+                .orderSnackId(orderSnackRequest.getOrderSnackId())
+                .build();
+
+        paymentOrderRepository.savePaymentOrder(paymentSave);
         return qrCodeImg;
     }
 
     @Override
     public void updatePaymentStatus(PaymentNotification notification) {
+        try {
+            OrderSnackPaymentStatus mercadoPagoOrderData = paymentGateway.getOrderData(notification.data().id());
+            var paymentUpdate = paymentOrderRepository.findPaymentByOrderId(mercadoPagoOrderData.getExternalOrderId());
+            paymentUpdate.setPaymentStatus(generatePaymentStatus(mercadoPagoOrderData.getPaymentStatus()));
 
+            paymentOrderRepository.savePaymentOrder(paymentUpdate);
+            log.info("Payment status updated successfully {}", notification.data().id());
+        } catch (Exception e) {
+            log.error("Error updating payment status: " + e.getMessage());
+            throw new RuntimeException("Error updating payment status: " + e.getMessage());
+        }
     }
 
+
+    private PaymentStatus generatePaymentStatus(String status) {
+        return switch (status) {
+            case "approved" -> PaymentStatus.APPROVED;
+            case "opened" -> PaymentStatus.OPPENED;
+            case "expired" -> PaymentStatus.EXPIRED;
+            default ->
+                    throw new UnsupportedOperationException("Payment status" + status + " not supported, choose between: closed, opened or expired");
+        };
+    }
 }

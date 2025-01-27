@@ -3,11 +3,12 @@ package com.lanchonete.order_payment.adapters.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lanchonete.order_payment.adapters.dto.OrderSnackDTO;
-import com.lanchonete.order_payment.core.model.PaymentNotification;
-import com.lanchonete.order_payment.core.usecase.interfaces.OrderPaymentUseCase;
+import com.lanchonete.order_payment.core.domain.PaymentNotification;
+import com.lanchonete.order_payment.core.usecase.interfaces.in.OrderPaymentUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -46,7 +47,7 @@ public class PaymentController {
             }
     )
     @PostMapping
-    public ResponseEntity<byte[]> requestPayment(@RequestBody OrderSnackDTO orderSnackDTO) {
+    public ResponseEntity<byte[]> requestPayment(@RequestBody @Valid OrderSnackDTO orderSnackDTO) {
         return ResponseEntity.ok().contentType(MediaType.valueOf(MediaType.IMAGE_PNG_VALUE)).body(paymentUseCase.requestPayment(orderSnackDTO));
     }
 
@@ -67,7 +68,7 @@ public class PaymentController {
     )
     @PostMapping("/notifications")
     @ResponseStatus(HttpStatus.CREATED)
-    public void updatePaymentStatus(@RequestBody PaymentNotification notification) throws JsonProcessingException {
+    public void updatePaymentStatus(@RequestBody @Valid PaymentNotification notification) throws JsonProcessingException {
         String not = new ObjectMapper().writeValueAsString(notification);
         if (notification.data().id().isBlank()) {
             log.error("Notification {} not found", not);
