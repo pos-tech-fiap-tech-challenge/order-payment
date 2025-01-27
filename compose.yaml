@@ -1,0 +1,39 @@
+services:
+  mongo:
+    image: 'mongo:latest'
+    container_name: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: order_payment
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mongo", "--username", "root", "--password", "password", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      retries: 5
+
+#  order-payment-app:
+#    image: 'order-payment-app:latest'
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    environment:
+#      SPRING_DATA_MONGODB_URI: mongodb://root:password@mongo:27017/order_payment
+#    ports:
+#      - "8081:8080"
+#    depends_on:
+#      mongo:
+#        condition: service_healthy
+#    networks:
+#      - app-network
+
+volumes:
+  mongo_data:
+
+networks:
+  app-network:
