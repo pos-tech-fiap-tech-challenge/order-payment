@@ -23,25 +23,32 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class MercadoPagoIntegrationGateway implements PaymentGateway {
-    @Value("${integration.mercadopago.url}")
-    private String url;
-    @Value("${integration.mercadopago.path}")
-    private String path;
-    @Value("${integration.mercadopago.accesstoken}")
-    private String accessToken;
 
-    @Value("${integration.mercadopago.orderDataUrl}")
+    private String url;
+    private String path;
+    private String accessToken;
     private String orderDataUrl;
-    @Value("${integration.mercadopago.notificationUrl}")
     private String notificationUrl;
 
     private static final String DEFAULT_DESCRIPTION = "Order Snack";
 
     private RestTemplate restTemplate;
 
-    public MercadoPagoIntegrationGateway(){
-        restTemplate = new RestTemplate();
+    public MercadoPagoIntegrationGateway(
+            @Value("${integration.mercadopago.url}") String url,
+            @Value("${integration.mercadopago.path}") String path,
+            @Value("${integration.mercadopago.accesstoken}") String accessToken,
+            @Value("${integration.mercadopago.orderDataUrl}") String orderDataUrl,
+            @Value("${integration.mercadopago.notificationUrl}") String notificationUrl,
+            RestTemplate restTemplate) {
+        this.url = url;
+        this.path = path;
+        this.accessToken = accessToken;
+        this.orderDataUrl = orderDataUrl;
+        this.notificationUrl = notificationUrl;
+        this.restTemplate = restTemplate;
     }
+
 
     @Override
     public QRCodeData requestQrData(OrderSnackDTO order) {
@@ -70,11 +77,11 @@ public class MercadoPagoIntegrationGateway implements PaymentGateway {
 
         mercadoPagoOrder.setItems(orderSnack.getItems().stream()
                 .map(item -> new MercadoPagoItem(
-                        item.getProduct().getName(),
-                        item.getProduct().getPrice(),
-                        item.getQuantity(),
+                        item.product().getName(),
+                        item.product().getPrice(),
+                        item.quantity(),
                         "unit",
-                        item.getProduct().getPrice().multiply(BigDecimal.valueOf(item.getQuantity()))
+                        item.product().getPrice().multiply(BigDecimal.valueOf(item.quantity()))
                 ))
                 .collect(Collectors.toList()));
 

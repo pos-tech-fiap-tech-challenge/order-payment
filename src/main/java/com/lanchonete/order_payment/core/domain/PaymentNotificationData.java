@@ -1,6 +1,6 @@
 package com.lanchonete.order_payment.core.domain;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
-public record PaymentNotificationData(@NotNull String id){
+public record PaymentNotificationData(@NotBlank String id){
 }
