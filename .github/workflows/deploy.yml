@@ -1,0 +1,93 @@
+name: Build and Deploy Application to EKS
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+
+
+jobs:
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name == 'dev' && 'dev' || 'production' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '23'
+          distribution: 'temurin'
+
+      - name: Build Application
+        run: |
+          mvn clean package -DskipTests
+
+    outputs:
+      jar_file: target/*.jar
+
+  dockerize:
+    name: Dockerize Application
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name == 'dev' && 'dev' || 'production' }}
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and Push Docker Image
+        env:
+          IMAGE_URI: ${{ vars.ECR_REPOSITORY_URL }}
+        run: |
+          echo "Using IMAGE_URI: $IMAGE_URI"
+          docker build -t $IMAGE_URI .
+          docker push $IMAGE_URI
+  deploy:
+    name: Deploy to EKS
+    runs-on: ubuntu-latest
+    needs: dockerize
+    environment: ${{ github.ref_name == 'dev' && 'dev' || 'production' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Configure kubectl
+        env:
+          CLUSTER_NAME: ${{ vars.CLUSTER_NAME }}
+        run: |
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name $CLUSTER_NAME
+
+      - name: Deploy to EKS
+        env:
+          IMAGE_URI: ${{ vars.ECR_REPOSITORY_URL }}
+        run: |
+          sed -i "s|<ECR_REPOSITORY_URL>|$IMAGE_URI|g" kuber/order-payment-deployment.yaml
+          kubectl apply -f kuber/namespace.yaml
+          kubectl apply -f kuber/service-account.yaml
+          kubectl apply -f kuber/configmap.yaml
+          kubectl apply -f kuber/order-payment-service.yaml 
+          kubectl apply -f kuber/hpa.yaml 
+          kubectl apply -f kuber/order-payment-deployment.yaml
