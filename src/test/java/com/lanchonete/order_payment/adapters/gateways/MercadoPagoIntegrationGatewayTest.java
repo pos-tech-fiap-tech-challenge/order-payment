@@ -1,7 +1,6 @@
 package com.lanchonete.order_payment.adapters.gateways;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lanchonete.order_payment.adapters.dto.OrderSnackDTO;
+import com.lanchonete.order_payment.adapters.dto.OrderDTO;
 import com.lanchonete.order_payment.adapters.dto.OrderSnackItemDTO;
 import com.lanchonete.order_payment.adapters.dto.ProductDTO;
 import com.lanchonete.order_payment.adapters.dto.QRCodeData;
@@ -57,15 +56,15 @@ class MercadoPagoIntegrationGatewayTest {
                 product,
                 2
         );
-        OrderSnackDTO orderSnackDTO = new OrderSnackDTO();
-        orderSnackDTO.setOrderSnackId(UUID.randomUUID());
-        orderSnackDTO.setTotalPrice(BigDecimal.valueOf(50.0));
-        orderSnackDTO.setItems(List.of(orderSnackItemDTO));
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setOrderId(UUID.randomUUID());
+        orderDTO.setTotalPrice(BigDecimal.valueOf(50.0));
+        orderDTO.setItems(List.of(orderSnackItemDTO));
 
         when(restTemplate.postForEntity(anyString(), any(MercadoPagoOrder.class), eq(QRCodeData.class)))
                 .thenReturn(new ResponseEntity<>(mockQRCodeData, HttpStatus.OK));
 
-        QRCodeData qrCodeData = mercadoPagoIntegrationGateway.requestQrData(orderSnackDTO);
+        QRCodeData qrCodeData = mercadoPagoIntegrationGateway.requestQrData(orderDTO);
 
         assertNotNull(qrCodeData);
         verify(restTemplate, times(1)).postForEntity(anyString(), any(MercadoPagoOrder.class), eq(QRCodeData.class));
@@ -73,15 +72,15 @@ class MercadoPagoIntegrationGatewayTest {
 
     @Test
     void requestQrData_ShouldThrowExceptionOnError() {
-        OrderSnackDTO orderSnackDTO = new OrderSnackDTO();
-        orderSnackDTO.setOrderSnackId(UUID.randomUUID());
-        orderSnackDTO.setTotalPrice(BigDecimal.valueOf(50.0));
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setOrderId(UUID.randomUUID());
+        orderDTO.setTotalPrice(BigDecimal.valueOf(50.0));
 
         when(restTemplate.postForEntity(anyString(), any(MercadoPagoOrder.class), eq(QRCodeData.class)))
                 .thenThrow(new RuntimeException("Erro ao conectar com MercadoPago"));
 
         Exception exception = assertThrows(RuntimeException.class, () ->
-                mercadoPagoIntegrationGateway.requestQrData(orderSnackDTO));
+                mercadoPagoIntegrationGateway.requestQrData(orderDTO));
 
         assertNotNull(exception.getMessage());
     }

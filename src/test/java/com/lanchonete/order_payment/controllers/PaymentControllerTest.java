@@ -2,7 +2,7 @@ package com.lanchonete.order_payment.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lanchonete.order_payment.adapters.controllers.PaymentController;
-import com.lanchonete.order_payment.adapters.dto.OrderSnackDTO;
+import com.lanchonete.order_payment.adapters.dto.OrderDTO;
 import com.lanchonete.order_payment.adapters.dto.OrderSnackItemDTO;
 import com.lanchonete.order_payment.adapters.dto.ProductDTO;
 import com.lanchonete.order_payment.core.domain.PaymentNotification;
@@ -42,12 +42,12 @@ class PaymentControllerTest {
     @Test
     void requestPayment_ShouldReturnOkWithQrCode() throws Exception {
         byte[] mockQrCode = "mockQRCode".getBytes();
-        when(paymentUseCase.requestPayment(any(OrderSnackDTO.class))).thenReturn(mockQrCode);
+        when(paymentUseCase.requestPayment(any(OrderDTO.class))).thenReturn(mockQrCode);
 
-        OrderSnackDTO orderSnackDTO = new OrderSnackDTO();
-        orderSnackDTO.setOrderSnackId(UUID.randomUUID());
-        orderSnackDTO.setTotalPrice(BigDecimal.valueOf(30));
-        orderSnackDTO.setPaymentGateway(PaymentGateway.MERCADO_PAGO);
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setOrderId(UUID.randomUUID());
+        orderDTO.setTotalPrice(BigDecimal.valueOf(30));
+        orderDTO.setPaymentGateway(PaymentGateway.MERCADO_PAGO);
         ProductDTO productDTO = new ProductDTO();
         OrderSnackItemDTO orderSnackItemDTO = new OrderSnackItemDTO(
                 BigDecimal.TEN,
@@ -55,16 +55,16 @@ class PaymentControllerTest {
                 3
         );
 
-        orderSnackDTO.setItems(List.of(orderSnackItemDTO));
+        orderDTO.setItems(List.of(orderSnackItemDTO));
 
         mockMvc.perform(post(PaymentController.BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(orderSnackDTO)))
+                        .content(new ObjectMapper().writeValueAsString(orderDTO)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.IMAGE_PNG_VALUE))
                 .andExpect(content().bytes(mockQrCode));
 
-        verify(paymentUseCase, times(1)).requestPayment(any(OrderSnackDTO.class));
+        verify(paymentUseCase, times(1)).requestPayment(any(OrderDTO.class));
     }
 
     @Test

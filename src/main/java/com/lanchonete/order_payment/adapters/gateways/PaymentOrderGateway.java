@@ -1,6 +1,5 @@
 package com.lanchonete.order_payment.adapters.gateways;
 
-import com.lanchonete.order_payment.adapters.dto.OrderSnackDTO;
 import com.lanchonete.order_payment.adapters.entities.PaymentEntity;
 import com.lanchonete.order_payment.core.domain.Payment;
 import com.lanchonete.order_payment.core.enums.PaymentStatus;

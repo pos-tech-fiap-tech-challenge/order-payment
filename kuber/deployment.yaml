@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app
-  namespace: app-namespace
+  name: order-payment
+  namespace: lanchonete
   labels:
-    app: tech-challenge
+    app: order-payment
     environment: production
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tech-challenge
+      app: order-payment
   template:
     metadata:
       labels:
-        app: tech-challenge
+        app: order-payment
     spec:
-      serviceAccountName: app-service-account
+      serviceAccountName: order-payment-service-account
       containers:
         - name: app
           image: <ECR_REPOSITORY_URL>:latest

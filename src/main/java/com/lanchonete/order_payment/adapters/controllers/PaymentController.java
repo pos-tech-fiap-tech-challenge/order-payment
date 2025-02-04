@@ -2,7 +2,7 @@ package com.lanchonete.order_payment.adapters.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lanchonete.order_payment.adapters.dto.OrderSnackDTO;
+import com.lanchonete.order_payment.adapters.dto.OrderDTO;
 import com.lanchonete.order_payment.core.domain.PaymentNotification;
 import com.lanchonete.order_payment.core.usecase.interfaces.in.OrderPaymentUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +33,7 @@ public class PaymentController {
     /**
      * Cria uma solicitação de pagamento com base nos dados do pedido.
      *
-     * @param orderSnackDTO DTO contendo os detalhes do pedido, como itens e valor.
+     * @param orderDTO DTO contendo os detalhes do pedido, como itens e valor.
      * @return Um byte array contendo a representação visual (exemplo: QR Code) do pagamento.
      */
     @Operation(
@@ -47,8 +47,8 @@ public class PaymentController {
             }
     )
     @PostMapping
-    public ResponseEntity<byte[]> requestPayment(@RequestBody @Valid OrderSnackDTO orderSnackDTO) {
-        return ResponseEntity.ok().contentType(MediaType.valueOf(MediaType.IMAGE_PNG_VALUE)).body(paymentUseCase.requestPayment(orderSnackDTO));
+    public ResponseEntity<byte[]> requestPayment(@RequestBody @Valid OrderDTO orderDTO) {
+        return ResponseEntity.ok().contentType(MediaType.valueOf(MediaType.IMAGE_PNG_VALUE)).body(paymentUseCase.requestPayment(orderDTO));
     }
 
     /**

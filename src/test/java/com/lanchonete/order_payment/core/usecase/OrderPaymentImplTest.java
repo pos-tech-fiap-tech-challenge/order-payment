@@ -1,6 +1,6 @@
 package com.lanchonete.order_payment.core.usecase;
 
-import com.lanchonete.order_payment.adapters.dto.OrderSnackDTO;
+import com.lanchonete.order_payment.adapters.dto.OrderDTO;
 import com.lanchonete.order_payment.adapters.dto.QRCodeData;
 import com.lanchonete.order_payment.core.domain.Payment;
 import com.lanchonete.order_payment.core.domain.PaymentNotificationData;
@@ -37,7 +37,7 @@ class OrderPaymentImplTest {
     @InjectMocks
     private OrderPaymentImpl orderPaymentImpl;
 
-    private OrderSnackDTO orderSnackRequest;
+    private OrderDTO orderSnackRequest;
     private QRCodeData qrCodeData;
     private PaymentNotification paymentNotification;
     private OrderSnackPaymentStatus orderSnackPaymentStatus;
@@ -45,8 +45,8 @@ class OrderPaymentImplTest {
     @BeforeEach
     void setUp() {
         UUID orderSnackId = UUID.randomUUID();
-        orderSnackRequest = OrderSnackDTO.builder()
-                .orderSnackId(orderSnackId)
+        orderSnackRequest = OrderDTO.builder()
+                .orderId(orderSnackId)
                 .build();
 
         qrCodeData = new QRCodeData("qrCodeSampleData", "");

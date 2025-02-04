@@ -1,7 +1,6 @@
 package com.lanchonete.order_payment.adapters.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lanchonete.order_payment.core.enums.PaymentGateway;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
@@ -18,11 +17,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrderSnackDTO {
+public class OrderDTO {
 
     @Schema(description = "Identificador do pedido")
     @NotNull
-    private UUID orderSnackId;
+    private UUID orderId;
 
     @NotNull
     @Schema(description = "Gateway de pagamento. Ex: MERCADO_PAGO")

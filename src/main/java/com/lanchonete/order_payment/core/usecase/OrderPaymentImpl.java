@@ -1,7 +1,7 @@
 package com.lanchonete.order_payment.core.usecase;
 
 
-import com.lanchonete.order_payment.adapters.dto.OrderSnackDTO;
+import com.lanchonete.order_payment.adapters.dto.OrderDTO;
 import com.lanchonete.order_payment.adapters.dto.QRCodeData;
 import com.lanchonete.order_payment.core.domain.Payment;
 import com.lanchonete.order_payment.core.enums.PaymentStatus;
@@ -24,7 +24,7 @@ public class OrderPaymentImpl implements OrderPaymentUseCase {
     private final PaymentOrderRepository paymentOrderRepository;
 
     @Override
-    public byte[] requestPayment(OrderSnackDTO orderSnackRequest) {
+    public byte[] requestPayment(OrderDTO orderSnackRequest) {
         QRCodeData qrData = paymentGateway.requestQrData(orderSnackRequest);
         byte[] qrCodeImg = qrCodeGenerationGateway.generateQRCodeImage(qrData.qrData(), 250, 250);
 
@@ -32,7 +32,7 @@ public class OrderPaymentImpl implements OrderPaymentUseCase {
                 .builder()
                 .paymentGateway(orderSnackRequest.getPaymentGateway())
                 .paymentStatus(PaymentStatus.OPPENED)
-                .orderSnackId(orderSnackRequest.getOrderSnackId())
+                .orderSnackId(orderSnackRequest.getOrderId())
                 .build();
 
         paymentOrderRepository.savePaymentOrder(paymentSave);

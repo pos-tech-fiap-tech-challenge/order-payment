@@ -2,7 +2,7 @@ package com.lanchonete.order_payment.adapters.gateways;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lanchonete.order_payment.adapters.dto.OrderSnackDTO;
+import com.lanchonete.order_payment.adapters.dto.OrderDTO;
 import com.lanchonete.order_payment.adapters.dto.QRCodeData;
 import com.lanchonete.order_payment.adapters.dto.mercadopago.MercadoPagoItem;
 import com.lanchonete.order_payment.adapters.dto.mercadopago.MercadoPagoOrder;
@@ -51,7 +51,7 @@ public class MercadoPagoIntegrationGateway implements PaymentGateway {
 
 
     @Override
-    public QRCodeData requestQrData(OrderSnackDTO order) {
+    public QRCodeData requestQrData(OrderDTO order) {
         String fullUrl = url + "/" + path + "?access_token=" + accessToken;
         MercadoPagoOrder mercadoPagoOrder = convert(order);
 
@@ -67,11 +67,11 @@ public class MercadoPagoIntegrationGateway implements PaymentGateway {
         }
     }
 
-    public MercadoPagoOrder convert(OrderSnackDTO orderSnack) {
+    public MercadoPagoOrder convert(OrderDTO orderSnack) {
         MercadoPagoOrder mercadoPagoOrder = new MercadoPagoOrder();
         mercadoPagoOrder.setDescription(DEFAULT_DESCRIPTION);
         mercadoPagoOrder.setTitle(DEFAULT_DESCRIPTION);
-        mercadoPagoOrder.setExternalReference(String.valueOf(orderSnack.getOrderSnackId()));
+        mercadoPagoOrder.setExternalReference(String.valueOf(orderSnack.getOrderId()));
         mercadoPagoOrder.setTotalAmount(orderSnack.getTotalPrice());
         mercadoPagoOrder.setNotificationUrl(notificationUrl);
 
