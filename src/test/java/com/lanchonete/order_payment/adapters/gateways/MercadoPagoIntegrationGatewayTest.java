@@ -39,9 +39,7 @@ class MercadoPagoIntegrationGatewayTest {
                 "v1/payments",
                 "test-access-token",
                 "https://api.mercadopago.com/v1/orders",
-                "https://webhook.site/notification",
-                restTemplate
-        );
+                "https://webhook.site/notification");
     }
 
     @Test

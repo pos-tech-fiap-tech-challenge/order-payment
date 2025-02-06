@@ -19,5 +19,5 @@ public class PaymentEntity {
     private PaymentStatus paymentStatus;
     private PaymentGateway paymentGateway;
     private PaymentType paymentType;
-    private UUID orderSnackId;
+    private UUID orderId;
 }

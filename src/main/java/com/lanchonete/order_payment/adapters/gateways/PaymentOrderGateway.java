@@ -15,14 +15,13 @@ import java.util.UUID;
 public class PaymentOrderGateway implements PaymentOrderRepository {
     private final PaymentRepository paymentRepository;
 
-
     @Override
     public void savePaymentOrder(Payment payment) {
         var paymentSave = PaymentEntity
                 .builder()
                 .paymentGateway(payment.getPaymentGateway())
                 .paymentStatus(PaymentStatus.OPPENED)
-                .orderSnackId(payment.getOrderSnackId())
+                .orderId(payment.getOrderSnackId())
                 .build();
         paymentRepository.save(paymentSave);
     }
@@ -33,7 +32,7 @@ public class PaymentOrderGateway implements PaymentOrderRepository {
 
         return Payment.builder()
                 .paymentType(paymentEntity.getPaymentType())
-                .orderSnackId(paymentEntity.getOrderSnackId())
+                .orderSnackId(paymentEntity.getOrderId())
                 .paymentStatus(paymentEntity.getPaymentStatus())
                 .paymentGateway(paymentEntity.getPaymentGateway())
                 .build();

@@ -15,7 +15,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service
 @AllArgsConstructor
 public class OrderPaymentImpl implements OrderPaymentUseCase {
@@ -47,9 +46,7 @@ public class OrderPaymentImpl implements OrderPaymentUseCase {
             paymentUpdate.setPaymentStatus(generatePaymentStatus(mercadoPagoOrderData.getPaymentStatus()));
 
             paymentOrderRepository.savePaymentOrder(paymentUpdate);
-            log.info("Payment status updated successfully {}", notification.data().id());
         } catch (Exception e) {
-            log.error("Error updating payment status: " + e.getMessage());
             throw new RuntimeException("Error updating payment status: " + e.getMessage());
         }
     }

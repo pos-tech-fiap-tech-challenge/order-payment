@@ -20,7 +20,6 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Component
 public class MercadoPagoIntegrationGateway implements PaymentGateway {
 
@@ -32,21 +31,20 @@ public class MercadoPagoIntegrationGateway implements PaymentGateway {
 
     private static final String DEFAULT_DESCRIPTION = "Order Snack";
 
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     public MercadoPagoIntegrationGateway(
             @Value("${integration.mercadopago.url}") String url,
             @Value("${integration.mercadopago.path}") String path,
             @Value("${integration.mercadopago.accesstoken}") String accessToken,
             @Value("${integration.mercadopago.orderDataUrl}") String orderDataUrl,
-            @Value("${integration.mercadopago.notificationUrl}") String notificationUrl,
-            RestTemplate restTemplate) {
+            @Value("${integration.mercadopago.notificationUrl}") String notificationUrl) {
         this.url = url;
         this.path = path;
         this.accessToken = accessToken;
         this.orderDataUrl = orderDataUrl;
         this.notificationUrl = notificationUrl;
-        this.restTemplate = restTemplate;
+        this.restTemplate = new RestTemplate();
     }
 
 
@@ -56,13 +54,10 @@ public class MercadoPagoIntegrationGateway implements PaymentGateway {
         MercadoPagoOrder mercadoPagoOrder = convert(order);
 
         try {
-            log.info("Requesting QRCode data to MercadoPago with order - {}", new ObjectMapper().writeValueAsString(mercadoPagoOrder));
             ResponseEntity<QRCodeData> response = restTemplate.postForEntity(fullUrl, mercadoPagoOrder, QRCodeData.class);
-            log.info("Response -  {}",  new ObjectMapper().writeValueAsString(response.getBody()));
 
             return Objects.requireNonNull(response.getBody());
         } catch (Exception ex) {
-            log.info("Error requesting QRCode data to MercadoPago - {} ",  ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -92,14 +87,11 @@ public class MercadoPagoIntegrationGateway implements PaymentGateway {
     public OrderSnackPaymentStatus getOrderData(String paymentId) {
         String fullUrl = orderDataUrl + "/" + paymentId + "?access_token=" + accessToken;
         try {
-            log.info("Requesting order data to MercadoPago with paymentId - {} ",  paymentId);
             ResponseEntity<MercadoPagoOrderData> response = restTemplate.getForEntity(fullUrl, MercadoPagoOrderData.class);
             MercadoPagoOrderData mercadoPagoOrderData = Objects.requireNonNull(response.getBody());
-            log.info("Response - {} ", new ObjectMapper().writeValueAsString(mercadoPagoOrderData));
             return new OrderSnackPaymentStatus(UUID.fromString(mercadoPagoOrderData.getExternalReference()), mercadoPagoOrderData.getStatus());
 
         } catch (Exception ex) {
-            log.error("Error requesting order data to MercadoPago - {} ", ex.getMessage());
             throw new RuntimeException(ex.getMessage());
         }
     }

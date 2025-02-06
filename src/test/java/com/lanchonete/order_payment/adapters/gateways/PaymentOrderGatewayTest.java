@@ -42,7 +42,7 @@ class PaymentOrderGatewayTest {
         paymentEntity = PaymentEntity.builder()
                 .paymentGateway(PaymentGateway.MERCADO_PAGO)
                 .paymentStatus(PaymentStatus.OPPENED)
-                .orderSnackId(orderSnackId)
+                .orderId(orderSnackId)
                 .build();
     }
 
@@ -60,7 +60,7 @@ class PaymentOrderGatewayTest {
 
         assertNotNull(foundPayment);
         assertEquals(paymentEntity.getPaymentGateway(), foundPayment.getPaymentGateway());
-        assertEquals(paymentEntity.getOrderSnackId(), foundPayment.getOrderSnackId());
+        assertEquals(paymentEntity.getOrderId(), foundPayment.getOrderSnackId());
         assertEquals(paymentEntity.getPaymentStatus(), foundPayment.getPaymentStatus());
         verify(paymentRepository, times(1)).findPaymentByOrderId(orderSnackId);
     }
