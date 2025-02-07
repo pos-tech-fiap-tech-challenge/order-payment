@@ -1,54 +1,19 @@
-name: Build and Deploy Application to EKS
+name: Deploy Application to EKS
 
 on:
   push:
     branches:
-      - developmentelopment
-  pull_request:
-    branches:
-      - developmentelopment
+      - main
 
 permissions:
   contents: read
   security-events: write
 
 jobs:
-  build:
-    name: Build Application
-    runs-on: ubuntu-latest
-    environment: ${{ github.ref_name == 'development' && 'development' || 'production' }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: '23'
-          distribution: 'temurin'
-
-      - name: Build Application
-        run: |
-          mvn clean package -DskipTests
-
-      - name: SonarQube Analysis
-        uses: SonarSource/sonarcloud-github-action@v2
-        with:
-          projectBaseDir: .
-          args: >
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-            -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-
-    outputs:
-      jar_file: target/*.jar
-
   dockerize:
     name: Dockerize Application
     runs-on: ubuntu-latest
-    environment: ${{ github.ref_name == 'development' && 'development' || 'production' }}
-    needs: build
+    environment: production
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -75,7 +40,7 @@ jobs:
     name: Deploy to EKS
     runs-on: ubuntu-latest
     needs: dockerize
-    environment: ${{ github.ref_name == 'development' && 'development' || 'production' }}
+    environment: production
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
