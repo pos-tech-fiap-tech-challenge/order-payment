@@ -31,6 +31,16 @@ jobs:
         run: |
           mvn clean package -DskipTests
 
+      - name: SonarQube Analysis
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          projectBaseDir: .
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
     outputs:
       jar_file: target/*.jar
 
@@ -60,6 +70,7 @@ jobs:
           echo "Using IMAGE_URI: $IMAGE_URI"
           docker build -t $IMAGE_URI .
           docker push $IMAGE_URI
+
   deploy:
     name: Deploy to EKS
     runs-on: ubuntu-latest
@@ -68,7 +79,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
