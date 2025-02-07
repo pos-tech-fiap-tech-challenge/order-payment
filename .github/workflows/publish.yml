@@ -3,10 +3,10 @@ name: Build and Deploy Application to EKS
 on:
   push:
     branches:
-      - development
+      - developmentelopment
   pull_request:
     branches:
-      - development
+      - developmentelopment
 
 permissions:
   contents: read
@@ -16,7 +16,7 @@ jobs:
   build:
     name: Build Application
     runs-on: ubuntu-latest
-    environment: ${{ github.ref_name == 'dev' && 'dev' || 'production' }}
+    environment: ${{ github.ref_name == 'development' && 'development' || 'production' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -47,7 +47,7 @@ jobs:
   dockerize:
     name: Dockerize Application
     runs-on: ubuntu-latest
-    environment: ${{ github.ref_name == 'dev' && 'dev' || 'production' }}
+    environment: ${{ github.ref_name == 'development' && 'development' || 'production' }}
     needs: build
     steps:
       - name: Checkout code
@@ -75,7 +75,7 @@ jobs:
     name: Deploy to EKS
     runs-on: ubuntu-latest
     needs: dockerize
-    environment: ${{ github.ref_name == 'dev' && 'dev' || 'production' }}
+    environment: ${{ github.ref_name == 'development' && 'development' || 'production' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
