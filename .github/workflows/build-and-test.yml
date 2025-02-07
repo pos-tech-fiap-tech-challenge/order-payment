@@ -16,7 +16,7 @@ jobs:
   build:
     name: Build and Test Application
     runs-on: ubuntu-latest
-    environment: development
+    environment: production
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -40,6 +40,8 @@ jobs:
           args: >
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
             -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-            -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+            -Dsonar.host.url=https://sonarcloud.io
             
+            
+      
