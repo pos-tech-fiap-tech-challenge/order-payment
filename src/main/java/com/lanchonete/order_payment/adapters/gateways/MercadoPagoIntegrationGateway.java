@@ -38,13 +38,14 @@ public class MercadoPagoIntegrationGateway implements PaymentGateway {
             @Value("${integration.mercadopago.path}") String path,
             @Value("${integration.mercadopago.accesstoken}") String accessToken,
             @Value("${integration.mercadopago.orderDataUrl}") String orderDataUrl,
-            @Value("${integration.mercadopago.notificationUrl}") String notificationUrl) {
+            @Value("${integration.mercadopago.notificationUrl}") String notificationUrl,
+            RestTemplate restTemplate) {
         this.url = url;
         this.path = path;
         this.accessToken = accessToken;
         this.orderDataUrl = orderDataUrl;
         this.notificationUrl = notificationUrl;
-        this.restTemplate = new RestTemplate();
+        this.restTemplate = restTemplate;
     }
 
 

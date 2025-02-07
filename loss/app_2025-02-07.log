@@ -1,0 +1,105 @@
+[DEBUG] 2025-02-07 17:56:58,982 logging.logProvider() - Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+[INFO ] 2025-02-07 17:56:59,044 Version.<clinit>() - HV000001: Hibernate Validator 8.0.2.Final
+[DEBUG] 2025-02-07 17:56:59,326 ResourceBundleMessageInterpolator.buildExpressionFactory() - Loaded expression factory via original TCCL
+[DEBUG] 2025-02-07 17:56:59,335 AbstractConfigurationImpl.messageInterpolator() - Setting custom MessageInterpolator of type org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator
+[DEBUG] 2025-02-07 17:56:59,368 ValidationXmlParser.getValidationXmlInputStream() - Trying to load META-INF/validation.xml for XML based Validator configuration.
+[DEBUG] 2025-02-07 17:56:59,387 ResourceLoaderHelper.getResettableInputStreamForPath() - Trying to load META-INF/validation.xml via TCCL
+[DEBUG] 2025-02-07 17:56:59,398 ResourceLoaderHelper.getResettableInputStreamForPath() - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+[DEBUG] 2025-02-07 17:56:59,401 ValidationXmlParser.getValidationXmlInputStream() - No META-INF/validation.xml found. Using annotation based configuration only.
+[DEBUG] 2025-02-07 17:56:59,434 TraversableResolvers.getDefault() - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+[DEBUG] 2025-02-07 17:57:00,655 ValidatorFactoryConfigurationHelper.determinePropertyNodeNameProvider() - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+[DEBUG] 2025-02-07 17:57:00,720 ValidatorFactoryConfigurationHelper.logValidatorFactoryScopedConfiguration() - HV000234: Using org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator as ValidatorFactory-scoped message interpolator.
+[DEBUG] 2025-02-07 17:57:00,720 ValidatorFactoryConfigurationHelper.logValidatorFactoryScopedConfiguration() - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+[DEBUG] 2025-02-07 17:57:00,720 ValidatorFactoryConfigurationHelper.logValidatorFactoryScopedConfiguration() - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+[DEBUG] 2025-02-07 17:57:00,725 ValidatorFactoryConfigurationHelper.logValidatorFactoryScopedConfiguration() - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+[DEBUG] 2025-02-07 17:57:00,727 ValidatorFactoryConfigurationHelper.logValidatorFactoryScopedConfiguration() - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+[DEBUG] 2025-02-07 17:57:02,143 Mappings.detectHandlerMethods() - 
+	c.l.o.a.c.PaymentController:
+	{POST [/api/v1/payments/notifications]}: updatePaymentStatus(PaymentNotification)
+	{POST [/api/v1/payments]}: requestPayment(OrderDTO)
+[DEBUG] 2025-02-07 17:57:02,339 RequestMappingHandlerMapping.handlerMethodsInitialized() - 2 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+[DEBUG] 2025-02-07 17:57:04,415 RequestMappingHandlerAdapter.initControllerAdviceCache() - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[DEBUG] 2025-02-07 17:57:04,910 ExceptionHandlerExceptionResolver.initExceptionHandlerAdviceCache() - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[INFO ] 2025-02-07 17:57:05,100 MockServletContext.log() - Initializing Spring TestDispatcherServlet ''
+[INFO ] 2025-02-07 17:57:05,111 TestDispatcherServlet.initServletBean() - Initializing Servlet ''
+[DEBUG] 2025-02-07 17:57:05,134 TestDispatcherServlet.initLocaleResolver() - Detected AcceptHeaderLocaleResolver
+[DEBUG] 2025-02-07 17:57:05,136 TestDispatcherServlet.initThemeResolver() - Detected FixedThemeResolver
+[DEBUG] 2025-02-07 17:57:05,142 TestDispatcherServlet.initRequestToViewNameTranslator() - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@1768c77f
+[DEBUG] 2025-02-07 17:57:05,142 TestDispatcherServlet.initFlashMapManager() - Detected org.springframework.web.servlet.support.SessionFlashMapManager@bb0dcb6
+[DEBUG] 2025-02-07 17:57:05,146 TestDispatcherServlet.initServletBean() - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+[INFO ] 2025-02-07 17:57:05,159 TestDispatcherServlet.initServletBean() - Completed initialization in 37 ms
+[DEBUG] 2025-02-07 17:57:05,993 TestDispatcherServlet.traceDebug() - POST "/api/v1/payments/notifications", parameters={}
+[DEBUG] 2025-02-07 17:57:06,126 RequestMappingHandlerMapping.getHandler() - Mapped to com.lanchonete.order_payment.adapters.controllers.PaymentController#updatePaymentStatus(PaymentNotification)
+[DEBUG] 2025-02-07 17:57:06,729 RequestResponseBodyMethodProcessor.traceDebug() - Read "application/json" to [PaymentNotification[data=PaymentNotificationData[id=]]]
+[DEBUG] 2025-02-07 17:57:07,355 PlatformResourceBundleLocator.doGetResourceBundle() - ValidationMessages not found.
+[DEBUG] 2025-02-07 17:57:07,368 PlatformResourceBundleLocator.doGetResourceBundle() - ContributorValidationMessages not found.
+[DEBUG] 2025-02-07 17:57:07,378 PlatformResourceBundleLocator.doGetResourceBundle() - org.hibernate.validator.ValidationMessages found.
+[WARN ] 2025-02-07 17:57:07,668 DefaultHandlerExceptionResolver.logException() - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public void com.lanchonete.order_payment.adapters.controllers.PaymentController.updatePaymentStatus(com.lanchonete.order_payment.core.domain.PaymentNotification) throws com.fasterxml.jackson.core.JsonProcessingException: [Field error in object 'paymentNotification' on field 'data.id': rejected value []; codes [NotBlank.paymentNotification.data.id,NotBlank.data.id,NotBlank.id,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [paymentNotification.data.id,data.id]; arguments []; default message [data.id]]; default message [must not be blank]] ]
+[DEBUG] 2025-02-07 17:57:07,668 TestDispatcherServlet.logResult() - Completed 400 BAD_REQUEST
+[DEBUG] 2025-02-07 17:57:07,711 ResourceBundleMessageInterpolator.buildExpressionFactory() - Loaded expression factory via original TCCL
+[DEBUG] 2025-02-07 17:57:07,718 AbstractConfigurationImpl.messageInterpolator() - Setting custom MessageInterpolator of type org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator
+[DEBUG] 2025-02-07 17:57:07,718 ValidationXmlParser.getValidationXmlInputStream() - Trying to load META-INF/validation.xml for XML based Validator configuration.
+[DEBUG] 2025-02-07 17:57:07,718 ResourceLoaderHelper.getResettableInputStreamForPath() - Trying to load META-INF/validation.xml via TCCL
+[DEBUG] 2025-02-07 17:57:07,718 ResourceLoaderHelper.getResettableInputStreamForPath() - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+[DEBUG] 2025-02-07 17:57:07,718 ValidationXmlParser.getValidationXmlInputStream() - No META-INF/validation.xml found. Using annotation based configuration only.
+[DEBUG] 2025-02-07 17:57:07,728 TraversableResolvers.getDefault() - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+[DEBUG] 2025-02-07 17:57:07,735 ValidatorFactoryConfigurationHelper.determinePropertyNodeNameProvider() - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+[DEBUG] 2025-02-07 17:57:07,735 ValidatorFactoryConfigurationHelper.logValidatorFactoryScopedConfiguration() - HV000234: Using org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator as ValidatorFactory-scoped message interpolator.
+[DEBUG] 2025-02-07 17:57:07,735 ValidatorFactoryConfigurationHelper.logValidatorFactoryScopedConfiguration() - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+[DEBUG] 2025-02-07 17:57:07,744 ValidatorFactoryConfigurationHelper.logValidatorFactoryScopedConfiguration() - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+[DEBUG] 2025-02-07 17:57:07,744 ValidatorFactoryConfigurationHelper.logValidatorFactoryScopedConfiguration() - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+[DEBUG] 2025-02-07 17:57:07,744 ValidatorFactoryConfigurationHelper.logValidatorFactoryScopedConfiguration() - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+[DEBUG] 2025-02-07 17:57:07,768 Mappings.detectHandlerMethods() - 
+	c.l.o.a.c.PaymentController:
+	{POST [/api/v1/payments/notifications]}: updatePaymentStatus(PaymentNotification)
+	{POST [/api/v1/payments]}: requestPayment(OrderDTO)
+[DEBUG] 2025-02-07 17:57:07,776 RequestMappingHandlerMapping.handlerMethodsInitialized() - 2 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+[DEBUG] 2025-02-07 17:57:07,784 RequestMappingHandlerAdapter.initControllerAdviceCache() - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[DEBUG] 2025-02-07 17:57:07,784 ExceptionHandlerExceptionResolver.initExceptionHandlerAdviceCache() - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[INFO ] 2025-02-07 17:57:07,794 MockServletContext.log() - Initializing Spring TestDispatcherServlet ''
+[INFO ] 2025-02-07 17:57:07,794 TestDispatcherServlet.initServletBean() - Initializing Servlet ''
+[DEBUG] 2025-02-07 17:57:07,796 TestDispatcherServlet.initLocaleResolver() - Detected AcceptHeaderLocaleResolver
+[DEBUG] 2025-02-07 17:57:07,798 TestDispatcherServlet.initThemeResolver() - Detected FixedThemeResolver
+[DEBUG] 2025-02-07 17:57:07,800 TestDispatcherServlet.initRequestToViewNameTranslator() - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@4a716a73
+[DEBUG] 2025-02-07 17:57:07,802 TestDispatcherServlet.initFlashMapManager() - Detected org.springframework.web.servlet.support.SessionFlashMapManager@55fee98a
+[DEBUG] 2025-02-07 17:57:07,802 TestDispatcherServlet.initServletBean() - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+[INFO ] 2025-02-07 17:57:07,804 TestDispatcherServlet.initServletBean() - Completed initialization in 6 ms
+[DEBUG] 2025-02-07 17:57:07,828 TestDispatcherServlet.traceDebug() - POST "/api/v1/payments/notifications", parameters={}
+[DEBUG] 2025-02-07 17:57:07,833 RequestMappingHandlerMapping.getHandler() - Mapped to com.lanchonete.order_payment.adapters.controllers.PaymentController#updatePaymentStatus(PaymentNotification)
+[DEBUG] 2025-02-07 17:57:07,853 RequestResponseBodyMethodProcessor.traceDebug() - Read "application/json" to [PaymentNotification[data=PaymentNotificationData[id=123]]]
+[INFO ] 2025-02-07 17:57:07,941 PaymentController.updatePaymentStatus() - New notification arrived - {"data":{"id":"123"}}: 
+[DEBUG] 2025-02-07 17:57:07,944 TestDispatcherServlet.logResult() - Completed 201 CREATED
+[DEBUG] 2025-02-07 17:57:07,969 ResourceBundleMessageInterpolator.buildExpressionFactory() - Loaded expression factory via original TCCL
+[DEBUG] 2025-02-07 17:57:07,971 AbstractConfigurationImpl.messageInterpolator() - Setting custom MessageInterpolator of type org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator
+[DEBUG] 2025-02-07 17:57:07,971 ValidationXmlParser.getValidationXmlInputStream() - Trying to load META-INF/validation.xml for XML based Validator configuration.
+[DEBUG] 2025-02-07 17:57:07,971 ResourceLoaderHelper.getResettableInputStreamForPath() - Trying to load META-INF/validation.xml via TCCL
+[DEBUG] 2025-02-07 17:57:07,976 ResourceLoaderHelper.getResettableInputStreamForPath() - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+[DEBUG] 2025-02-07 17:57:07,977 ValidationXmlParser.getValidationXmlInputStream() - No META-INF/validation.xml found. Using annotation based configuration only.
+[DEBUG] 2025-02-07 17:57:07,977 TraversableResolvers.getDefault() - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+[DEBUG] 2025-02-07 17:57:07,984 ValidatorFactoryConfigurationHelper.determinePropertyNodeNameProvider() - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+[DEBUG] 2025-02-07 17:57:07,984 ValidatorFactoryConfigurationHelper.logValidatorFactoryScopedConfiguration() - HV000234: Using org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator as ValidatorFactory-scoped message interpolator.
+[DEBUG] 2025-02-07 17:57:07,992 ValidatorFactoryConfigurationHelper.logValidatorFactoryScopedConfiguration() - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+[DEBUG] 2025-02-07 17:57:07,994 ValidatorFactoryConfigurationHelper.logValidatorFactoryScopedConfiguration() - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+[DEBUG] 2025-02-07 17:57:07,994 ValidatorFactoryConfigurationHelper.logValidatorFactoryScopedConfiguration() - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+[DEBUG] 2025-02-07 17:57:07,994 ValidatorFactoryConfigurationHelper.logValidatorFactoryScopedConfiguration() - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+[DEBUG] 2025-02-07 17:57:08,010 Mappings.detectHandlerMethods() - 
+	c.l.o.a.c.PaymentController:
+	{POST [/api/v1/payments/notifications]}: updatePaymentStatus(PaymentNotification)
+	{POST [/api/v1/payments]}: requestPayment(OrderDTO)
+[DEBUG] 2025-02-07 17:57:08,017 RequestMappingHandlerMapping.handlerMethodsInitialized() - 2 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+[DEBUG] 2025-02-07 17:57:08,027 RequestMappingHandlerAdapter.initControllerAdviceCache() - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+[DEBUG] 2025-02-07 17:57:08,027 ExceptionHandlerExceptionResolver.initExceptionHandlerAdviceCache() - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+[INFO ] 2025-02-07 17:57:08,034 MockServletContext.log() - Initializing Spring TestDispatcherServlet ''
+[INFO ] 2025-02-07 17:57:08,034 TestDispatcherServlet.initServletBean() - Initializing Servlet ''
+[DEBUG] 2025-02-07 17:57:08,038 TestDispatcherServlet.initLocaleResolver() - Detected AcceptHeaderLocaleResolver
+[DEBUG] 2025-02-07 17:57:08,038 TestDispatcherServlet.initThemeResolver() - Detected FixedThemeResolver
+[DEBUG] 2025-02-07 17:57:08,038 TestDispatcherServlet.initRequestToViewNameTranslator() - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@33bc7565
+[DEBUG] 2025-02-07 17:57:08,038 TestDispatcherServlet.initFlashMapManager() - Detected org.springframework.web.servlet.support.SessionFlashMapManager@7bca96d6
+[DEBUG] 2025-02-07 17:57:08,042 TestDispatcherServlet.initServletBean() - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+[INFO ] 2025-02-07 17:57:08,044 TestDispatcherServlet.initServletBean() - Completed initialization in 8 ms
+[DEBUG] 2025-02-07 17:57:08,240 TestDispatcherServlet.traceDebug() - POST "/api/v1/payments", parameters={}
+[DEBUG] 2025-02-07 17:57:08,240 RequestMappingHandlerMapping.getHandler() - Mapped to com.lanchonete.order_payment.adapters.controllers.PaymentController#requestPayment(OrderDTO)
+[DEBUG] 2025-02-07 17:57:08,417 RequestResponseBodyMethodProcessor.traceDebug() - Read "application/json" to [OrderDTO(orderId=aeeb0724-2c3d-4005-adaa-e01cbb3ad8e9, paymentGateway=MERCADO_PAGO, items=[OrderSnac (truncated)...]
+[DEBUG] 2025-02-07 17:57:08,474 HttpEntityMethodProcessor.writeWithMessageConverters() - Found 'Content-Type:image/png' in response
+[DEBUG] 2025-02-07 17:57:08,478 HttpEntityMethodProcessor.traceDebug() - Writing [{109, 111, 99, 107, 81, 82, 67, 111, 100, 101}]
+[DEBUG] 2025-02-07 17:57:08,483 TestDispatcherServlet.logResult() - Completed 200 OK
