@@ -2,11 +2,8 @@ name: Build and SonarQube Analysis
 
 on:
   push:
-    branches:
-      - main # Roda na branch principal
-  pull_request:
-    types: [opened, synchronize, reopened] # Roda em PRs para validar antes do merge
-
+    pull_request:
+      - main
 jobs:
   build:
     name: Build and Analyze
