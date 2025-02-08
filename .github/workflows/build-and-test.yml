@@ -44,3 +44,4 @@ jobs:
             -Dsonar.organization=pos-tech-fiap-tech-challenge \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+            -Dsonar.qualitygate.wait=true
