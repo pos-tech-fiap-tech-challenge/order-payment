@@ -43,5 +43,4 @@ jobs:
             -Dsonar.projectKey=com.lanchonete:order-payment \
             -Dsonar.organization=pos-tech-fiap-tech-challenge \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-            -Dsonar.branch.name=development
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
