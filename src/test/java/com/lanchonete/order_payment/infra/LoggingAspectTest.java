@@ -1,6 +1,5 @@
 package com.lanchonete.order_payment.infra;
 
-import com.lanchonete.order_payment.infra.logs.LoggingAspect;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.jupiter.api.BeforeEach;
