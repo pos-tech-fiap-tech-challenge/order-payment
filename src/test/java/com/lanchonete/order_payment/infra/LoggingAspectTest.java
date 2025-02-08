@@ -27,7 +27,6 @@ class LoggingAspectTest {
         MockitoAnnotations.openMocks(this);
         loggingAspect = new LoggingAspect();
 
-
     }
 
     @Test
