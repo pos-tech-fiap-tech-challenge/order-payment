@@ -60,9 +60,9 @@
 [DEBUG] 2025-02-07 17:57:40,748 DefaultListableBeanFactory.getSingleton() - Creating shared instance of singleton bean 'webServerFactoryCustomizerBeanPostProcessor'
 [DEBUG] 2025-02-07 17:57:40,749 DefaultListableBeanFactory.getSingleton() - Creating shared instance of singleton bean 'errorPageRegistrarBeanPostProcessor'
 [DEBUG] 2025-02-07 17:57:40,750 DefaultListableBeanFactory.getSingleton() - Creating shared instance of singleton bean 'healthEndpointGroupsBeanPostProcessor'
-[DEBUG] 2025-02-07 17:57:40,780 ReflectiveAspectJAdvisorFactory.getAdvice() - Found AspectJ method: public void com.lanchonete.order_payment.infra.logs.LoggingAspect.logBefore(org.aspectj.lang.JoinPoint)
-[DEBUG] 2025-02-07 17:57:40,782 ReflectiveAspectJAdvisorFactory.getAdvice() - Found AspectJ method: public void com.lanchonete.order_payment.infra.logs.LoggingAspect.logAfterReturning(org.aspectj.lang.JoinPoint,java.lang.Object)
-[DEBUG] 2025-02-07 17:57:40,789 ReflectiveAspectJAdvisorFactory.getAdvice() - Found AspectJ method: public void com.lanchonete.order_payment.infra.logs.LoggingAspect.logAfterThrowing(org.aspectj.lang.JoinPoint,java.lang.Throwable)
+[DEBUG] 2025-02-07 17:57:40,780 ReflectiveAspectJAdvisorFactory.getAdvice() - Found AspectJ method: public void com.lanchonete.order_payment.infra.LoggingAspect.logBefore(org.aspectj.lang.JoinPoint)
+[DEBUG] 2025-02-07 17:57:40,782 ReflectiveAspectJAdvisorFactory.getAdvice() - Found AspectJ method: public void com.lanchonete.order_payment.infra.LoggingAspect.logAfterReturning(org.aspectj.lang.JoinPoint,java.lang.Object)
+[DEBUG] 2025-02-07 17:57:40,789 ReflectiveAspectJAdvisorFactory.getAdvice() - Found AspectJ method: public void com.lanchonete.order_payment.infra.LoggingAspect.logAfterThrowing(org.aspectj.lang.JoinPoint,java.lang.Throwable)
 [DEBUG] 2025-02-07 17:57:40,854 ReflectiveAspectJAdvisorFactory.getAdvice() - Found AspectJ method: public java.lang.Object io.micrometer.observation.aop.ObservedAspect.observeClass(org.aspectj.lang.ProceedingJoinPoint) throws java.lang.Throwable
 [DEBUG] 2025-02-07 17:57:40,856 ReflectiveAspectJAdvisorFactory.getAdvice() - Found AspectJ method: public java.lang.Object io.micrometer.observation.aop.ObservedAspect.observeMethod(org.aspectj.lang.ProceedingJoinPoint) throws java.lang.Throwable
 [DEBUG] 2025-02-07 17:57:41,200 DefaultListableBeanFactory.getSingleton() - Creating shared instance of singleton bean 'meterRegistryPostProcessor'

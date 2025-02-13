@@ -6,6 +6,7 @@ metadata:
 data:
   SPRING_DATASOURCE_URL: jdbc:mysql://lanchonete1.c56iugywe6gv.us-east-1.rds.amazonaws.com:3306/lanchonete?useTimezone=true&serverTimezone=America/Sao_Paulo
   SPRING_DATASOURCE_USERNAME: admin
+  ORDER_INTEGRATION_URL: https://order:8080/update
   environment: dev
 ---
 apiVersion: v1

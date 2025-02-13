@@ -57,6 +57,7 @@ jobs:
           CLUSTER_NAME: ${{ vars.CLUSTER_NAME }}
         run: |
           aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name $CLUSTER_NAME
+          
 
       - name: Deploy to EKS
         env:
