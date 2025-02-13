@@ -7,6 +7,7 @@ import com.lanchonete.order_payment.core.domain.PaymentNotificationData;
 import com.lanchonete.order_payment.core.enums.PaymentStatus;
 import com.lanchonete.order_payment.core.domain.OrderSnackPaymentStatus;
 import com.lanchonete.order_payment.core.domain.PaymentNotification;
+import com.lanchonete.order_payment.core.usecase.interfaces.out.OrderGateway;
 import com.lanchonete.order_payment.core.usecase.interfaces.out.PaymentGateway;
 import com.lanchonete.order_payment.core.usecase.interfaces.out.PaymentOrderRepository;
 import com.lanchonete.order_payment.core.usecase.interfaces.out.QRCodeGenerationGateway;
@@ -27,6 +28,8 @@ class OrderPaymentImplTest {
 
     @Mock
     private PaymentGateway paymentGateway;
+    @Mock
+    private OrderGateway orderGateway;
 
     @Mock
     private QRCodeGenerationGateway qrCodeGenerationGateway;
@@ -83,7 +86,6 @@ class OrderPaymentImplTest {
                 .paymentStatus(PaymentStatus.OPPENED)
                 .build();
         when(paymentOrderRepository.findPaymentByOrderId(orderSnackPaymentStatus.getExternalOrderId())).thenReturn(payment);
-
         orderPaymentImpl.updatePaymentStatus(paymentNotification);
 
         verify(paymentGateway, times(1)).getOrderData(paymentNotification.data().id());

@@ -1,4 +1,7 @@
 package com.lanchonete.order_payment.core.usecase.interfaces.out;
 
-public class OrderGateway {
+import com.lanchonete.order_payment.core.enums.PaymentStatus;
+
+public interface OrderGateway {
+    void updateOrderStatus(PaymentStatus paymentStatus);
 }

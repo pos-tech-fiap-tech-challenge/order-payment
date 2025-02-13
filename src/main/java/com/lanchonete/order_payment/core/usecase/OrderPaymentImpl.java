@@ -8,6 +8,7 @@ import com.lanchonete.order_payment.core.enums.PaymentStatus;
 import com.lanchonete.order_payment.core.domain.OrderSnackPaymentStatus;
 import com.lanchonete.order_payment.core.domain.PaymentNotification;
 import com.lanchonete.order_payment.core.usecase.interfaces.in.OrderPaymentUseCase;
+import com.lanchonete.order_payment.core.usecase.interfaces.out.OrderGateway;
 import com.lanchonete.order_payment.core.usecase.interfaces.out.PaymentOrderRepository;
 import com.lanchonete.order_payment.core.usecase.interfaces.out.PaymentGateway;
 import com.lanchonete.order_payment.core.usecase.interfaces.out.QRCodeGenerationGateway;
@@ -21,6 +22,7 @@ public class OrderPaymentImpl implements OrderPaymentUseCase {
     private final PaymentGateway paymentGateway;
     private final QRCodeGenerationGateway qrCodeGenerationGateway;
     private final PaymentOrderRepository paymentOrderRepository;
+    private final OrderGateway orderGateway;
 
     @Override
     public byte[] requestPayment(OrderDTO orderSnackRequest) {
@@ -44,7 +46,7 @@ public class OrderPaymentImpl implements OrderPaymentUseCase {
             OrderSnackPaymentStatus mercadoPagoOrderData = paymentGateway.getOrderData(notification.data().id());
             var paymentUpdate = paymentOrderRepository.findPaymentByOrderId(mercadoPagoOrderData.getExternalOrderId());
             paymentUpdate.setPaymentStatus(generatePaymentStatus(mercadoPagoOrderData.getPaymentStatus()));
-
+            orderGateway.updateOrderStatus(paymentUpdate.getPaymentStatus());
             paymentOrderRepository.savePaymentOrder(paymentUpdate);
         } catch (Exception e) {
             throw new RuntimeException("Error updating payment status: " + e.getMessage());
