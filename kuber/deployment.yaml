@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: order-payment
-  namespace: order-payment
+  namespace: lanchonete
   labels:
     app: order-payment
     environment: production
