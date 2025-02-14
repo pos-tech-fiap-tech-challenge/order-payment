@@ -4,21 +4,21 @@ metadata:
   name: order-payment
   namespace: lanchonete
   labels:
-    app: order-payment
+    app: lanchonete
     environment: production
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: order-payment
+      app: lanchonete
   template:
     metadata:
       labels:
-        app: order-payment
+        app: lanchonete
     spec:
       serviceAccountName: order-payment-service-account
       containers:
-        - name: app
+        - name: order-payment
           image: <ECR_REPOSITORY_URL>:latest
           env:
             - name: environment

@@ -7,15 +7,22 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Slf4j
-@AllArgsConstructor
+@Service
 public class OrderIntegrationGateway implements OrderGateway {
-    @Value("${integration.order.url}")
     private String UPDATE_ORDER_PATH;
 
     private RestTemplate restTemplate;
+
+    public OrderIntegrationGateway(
+            @Value("${integration.order.url}")
+            String UPDATE_ORDER_PATH, RestTemplate restTemplate) {
+        this.UPDATE_ORDER_PATH = UPDATE_ORDER_PATH;
+        this.restTemplate = restTemplate;
+    }
 
     @Override
     public void updateOrderStatus(PaymentStatus paymentStatus) {

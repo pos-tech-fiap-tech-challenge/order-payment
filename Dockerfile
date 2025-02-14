@@ -21,4 +21,4 @@ COPY --from=build /order-payment-app/target/*.jar order-payment-app.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "order-payment-app.jar"]
