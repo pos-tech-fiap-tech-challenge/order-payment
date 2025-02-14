@@ -1,15 +1,21 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: order-payment-service
-  namespace: lanchonete
+  name: order-payment-alb
+  namespace: order-payment
   labels:
     app: order-payment
+    environment: ion
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "alb"
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: order-payment
   ports:
     - protocol: TCP
-      port: 8080
+      port: 80
       targetPort: 8080
