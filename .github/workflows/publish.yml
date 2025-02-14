@@ -67,5 +67,6 @@ jobs:
           kubectl apply -f kuber/namespace.yaml
           kubectl apply -f kuber/service-account.yaml
           kubectl apply -f kuber/configmap.yaml
+          kubectl apply -f kuber/service.yaml 
           kubectl apply -f kuber/hpa.yaml 
           kubectl apply -f kuber/deployment.yaml
