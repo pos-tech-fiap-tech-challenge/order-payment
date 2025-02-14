@@ -4,14 +4,15 @@ metadata:
   name: order-payment-config
   namespace: lanchonete
 data:
-  MONGO_INITDB_ROOT_USERNAME: admin
+  MONGO_INITDB_ROOT_USERNAME: root
+  MONGO_URI: "mongodb://lanchonete-instance.c56iugywe6gv.us-east-1.docdb.amazonaws.com:27017/tlsAllowInvalidCertificates=true&retryWrites=false"
   environment: dev
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: app-secrets
+  name: mongo-secret
   namespace: lanchonete
 type: Opaque
 data:
-  MONGO_INITDB_ROOT_PASSWORD: bXlzZWN1cmVwYXNzd29yZA==
+  MONGO_PASSWORD: cGFzc3dvcmQ=
