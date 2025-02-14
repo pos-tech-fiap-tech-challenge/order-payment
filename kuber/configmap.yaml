@@ -4,8 +4,8 @@ metadata:
   name: mongo-config
   namespace: lanchonete
 data:
-  MONGO_INITDB_ROOT_USERNAME: root
-  MONGO_USERNAME: "mongodb://lanchonete-instance.c56iugywe6gv.us-east-1.docdb.amazonaws.com:27017/tlsAllowInvalidCertificates=true&retryWrites=false"
+  MONGO_USERNAME: root
+  MONGO_URI: "mongodb://lanchonete-instance.c56iugywe6gv.us-east-1.docdb.amazonaws.com:27017/tlsAllowInvalidCertificates=true&retryWrites=false"
   environment: dev
 ---
 apiVersion: v1
