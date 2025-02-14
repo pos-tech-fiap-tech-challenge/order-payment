@@ -2,19 +2,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: order-payment
-  namespace: lanchonete
+  namespace: order-payment
   labels:
-    app: lanchonete
+    app: order-payment
     environment: production
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: lanchonete
+      app: order-payment
   template:
     metadata:
       labels:
-        app: lanchonete
+        app: order-payment
     spec:
       serviceAccountName: order-payment-service-account
       containers:
