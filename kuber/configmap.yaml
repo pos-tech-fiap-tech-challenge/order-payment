@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: order-payment-config
+  name: mongo-config
   namespace: lanchonete
 data:
   MONGO_INITDB_ROOT_USERNAME: root
