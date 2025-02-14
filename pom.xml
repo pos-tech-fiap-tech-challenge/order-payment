@@ -169,6 +169,11 @@
                 <version>3.2.0</version>
                 <configuration>
                     <finalName>order-payment-app</finalName>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.lanchonete.order_payment.OrderPaymentApplication</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
