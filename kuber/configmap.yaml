@@ -4,16 +4,14 @@ metadata:
   name: order-payment-config
   namespace: lanchonete
 data:
-  SPRING_DATASOURCE_URL: jdbc:mysql://lanchonete1.c56iugywe6gv.us-east-1.rds.amazonaws.com:3306/lanchonete?useTimezone=true&serverTimezone=America/Sao_Paulo
-  SPRING_DATASOURCE_USERNAME: admin
-  ORDER_INTEGRATION_URL: https://order:8080/update
+  MONGO_INITDB_ROOT_USERNAME: admin
   environment: dev
 ---
 apiVersion: v1
 kind: Secret
 metadata:
   name: app-secrets
-  namespace: app-namespace
+  namespace: lanchonete
 type: Opaque
 data:
-  SPRING_DATASOURCE_PASSWORD: bXlzZWN1cmVwYXNzd29yZA==
+  MONGO_INITDB_ROOT_PASSWORD: bXlzZWN1cmVwYXNzd29yZA==
