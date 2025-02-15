@@ -14,19 +14,16 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # 🔹 Fase 2: Runtime - Criar container leve apenas com o JDK
-FROM openjdk:17-jdk-alpine
+FROM alpine/java:21-jdk
 
 WORKDIR /app
-
-# Atualizar os repositórios do Alpine e instalar os certificados e OpenJDK (sem especificar versão)
-RUN apk update && apk add --no-cache ca-certificates openjdk-jdk
 
 # Copiar o certificado
 COPY global-bundle.pem /certs/global-bundle.pem
 
 # Importar o certificado no TrustStore do Java
 RUN keytool -import -trustcacerts \
-    -keystore /usr/lib/jvm/java-17-openjdk/lib/security/cacerts \
+    -keystore /opt/java/openjdk/lib/security/cacerts \
     -storepass changeit -noprompt \
     -alias documentdb-cert \
     -file /certs/global-bundle.pem
