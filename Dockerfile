@@ -18,15 +18,15 @@ FROM openjdk:17-jdk-alpine
 
 WORKDIR /app
 
-# Instalar dependências necessárias no Alpine
-RUN apk add --no-cache ca-certificates openjdk17
+# Atualizar os repositórios do Alpine e instalar os certificados
+RUN apk update && apk add --no-cache ca-certificates openjdk17-jdk
 
 # Copiar o certificado
 COPY global-bundle.pem /certs/global-bundle.pem
 
-# Importar o certificado no TrustStore do Java (usando caminho correto para Alpine)
+# Importar o certificado no TrustStore do Java
 RUN keytool -import -trustcacerts \
-    -keystore /usr/lib/jvm/java-17-openjdk/jre/lib/security/cacerts \
+    -keystore /usr/lib/jvm/java-17-openjdk/lib/security/cacerts \
     -storepass changeit -noprompt \
     -alias documentdb-cert \
     -file /certs/global-bundle.pem
