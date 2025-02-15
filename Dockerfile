@@ -23,13 +23,14 @@ RUN mkdir -p /etc/certs
 
 # Copiar o certificado do DocumentDB
 COPY global-bundle.pem /etc/certs/global-bundle.pem
+COPY AmazonRootCA1.pem /etc/certs/aws-root.pem
 
-RUN curl -o /etc/certs/aws-root.pem https://www.amazontrust.com/repository/AmazonRootCA1.pem \
-    && keytool -import -trustcacerts \
+# Importar o certificado no TrustStore do Java
+RUN keytool -import -trustcacerts \
     -keystore /opt/java/openjdk/lib/security/cacerts \
     -storepass changeit -noprompt \
     -alias aws-root \
-    -file /etc/certs/aws-root.pem \
+    -file /etc/certs/aws-roote.pem
 
 # Importar o certificado no TrustStore do Java
 RUN keytool -import -trustcacerts \
