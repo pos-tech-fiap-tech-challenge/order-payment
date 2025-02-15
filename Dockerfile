@@ -14,22 +14,25 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # 🔹 Fase 2: Runtime - Criar container leve apenas com o JDK
-FROM alpine/java:21-jdk
+FROM eclipse-temurin:17-jdk  # Usa uma imagem que tem keytool
 
 WORKDIR /app
 
+# Criar diretório de certificados
+RUN mkdir -p /etc/certs
+
 # Copiar o certificado do DocumentDB
-COPY global-bundle.pem /certs/global-bundle.pem
+COPY global-bundle.pem /etc/certs/global-bundle.pem
 
 # Importar o certificado no TrustStore do Java
 RUN keytool -import -trustcacerts \
-    -keystore /opt/java/openjdk/lib/security/cacerts \
+    -keystore /etc/ssl/certs/java/cacerts \
     -storepass changeit -noprompt \
     -alias documentdb-cert \
-    -file /certs/global-bundle.pem
+    -file /etc/certs/global-bundle.pem
 
 # Definir explicitamente o trustStore e trustStorePassword no Java no ENTRYPOINT
-ENTRYPOINT ["java", "-Djavax.net.ssl.trustStore=/opt/java/openjdk/lib/security/cacerts", "-Djavax.net.ssl.trustStorePassword=changeit", "-jar", "order-payment-app.jar"]
+ENTRYPOINT ["java", "-Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts", "-Djavax.net.ssl.trustStorePassword=changeit", "-jar", "order-payment-app.jar"]
 
 # Copia o JAR gerado na fase de build
 COPY --from=build /app/target/order-payment-*.jar order-payment-app.jar
