@@ -18,9 +18,18 @@ FROM openjdk:17-jdk-alpine
 
 WORKDIR /app
 
-# Instalar o keytool (se necessário) e importar o certificado na imagem final
+# Instalar dependências necessárias no Alpine
+RUN apk add --no-cache ca-certificates openjdk17
+
+# Copiar o certificado
 COPY global-bundle.pem /certs/global-bundle.pem
-RUN keytool -import -trustcacerts -keystore /etc/ssl/certs/java/cacerts -storepass changeit -noprompt -alias documentdb-cert -file /certs/global-bundle.pem
+
+# Importar o certificado no TrustStore do Java (usando caminho correto para Alpine)
+RUN keytool -import -trustcacerts \
+    -keystore /usr/lib/jvm/java-17-openjdk/jre/lib/security/cacerts \
+    -storepass changeit -noprompt \
+    -alias documentdb-cert \
+    -file /certs/global-bundle.pem
 
 # Copia o JAR gerado na fase de build
 COPY --from=build /app/target/order-payment-*.jar order-payment-app.jar
