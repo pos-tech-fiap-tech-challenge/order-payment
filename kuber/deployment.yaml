@@ -81,7 +81,7 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - "cp /tmp/certs/global-bundle.pem /certs/global-bundle.pem &&
-               exec java $JAVA_OPTS -jar order-payment-app.jar"
+               exec java $JAVA_OPTS -Djavax.net.debug=ssl -jar order-payment-app.jar"
 
 
 
