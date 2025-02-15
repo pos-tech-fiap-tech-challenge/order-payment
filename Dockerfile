@@ -18,6 +18,10 @@ FROM openjdk:17-jdk-alpine
 
 WORKDIR /app
 
+# Instalar o keytool (se necessário) e importar o certificado na imagem final
+COPY global-bundle.pem /certs/global-bundle.pem
+RUN keytool -import -trustcacerts -keystore /etc/ssl/certs/java/cacerts -storepass changeit -noprompt -alias documentdb-cert -file /certs/global-bundle.pem
+
 # Copia o JAR gerado na fase de build
 COPY --from=build /app/target/order-payment-*.jar order-payment-app.jar
 
