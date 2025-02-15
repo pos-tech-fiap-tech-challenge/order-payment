@@ -31,9 +31,7 @@ RUN keytool -import -trustcacerts \
     -alias documentdb-cert \
     -file /etc/certs/global-bundle.pem
 
-ENV JAVA_OPTS="-Djavax.net.ssl.trustStore=/opt/java/openjdk/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit"
-
-ENTRYPOINT ["java", "$JAVA_OPTS", "-jar", "order-payment-app.jar"]
+ENTRYPOINT ["java", "-Djavax.net.ssl.trustStore=/opt/java/openjdk/lib/security/cacerts", "-Djavax.net.ssl.trustStorePassword=changeit", "-jar", "order-payment-app.jar"]
 
 # Copia o JAR gerado na fase de build
 COPY --from=build /app/target/order-payment-*.jar order-payment-app.jar
