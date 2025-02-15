@@ -14,7 +14,7 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # 🔹 Fase 2: Runtime - Criar container leve apenas com o JDK
-FROM eclipse-temurin:17-jdk  # Usa uma imagem que tem keytool
+FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
