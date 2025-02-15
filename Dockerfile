@@ -18,8 +18,8 @@ FROM openjdk:17-jdk-alpine
 
 WORKDIR /app
 
-# Atualizar os repositórios do Alpine e instalar os certificados
-RUN apk update && apk add --no-cache ca-certificates openjdk17-lts
+# Atualizar os repositórios do Alpine e instalar os certificados e OpenJDK (sem especificar versão)
+RUN apk update && apk add --no-cache ca-certificates openjdk-jdk
 
 # Copiar o certificado
 COPY global-bundle.pem /certs/global-bundle.pem
