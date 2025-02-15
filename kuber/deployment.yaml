@@ -17,6 +17,10 @@ spec:
         app: order-payment
     spec:
       serviceAccountName: order-payment-service-account
+      volumes:
+        - name: documentdb-cert-volume
+          secret:
+            secretName: documentdb-cert
       containers:
         - name: order-payment
           image: <ECR_REPOSITORY_URL>:latest
@@ -26,7 +30,7 @@ spec:
             - configMapRef:
                 name: mongo-config
           volumeMounts:
-            - name: documentdb-cert
+            - name: documentdb-cert-volume
               mountPath: "/certs"
               readOnly: true
           livenessProbe:
