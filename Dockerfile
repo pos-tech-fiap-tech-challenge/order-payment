@@ -26,7 +26,7 @@ COPY global-bundle.pem /etc/certs/global-bundle.pem
 
 # Importar o certificado no TrustStore do Java
 RUN keytool -import -trustcacerts \
-    -keystore /etc/ssl/certs/java/cacerts \
+    -keystore /opt/java/openjdk/lib/security/cacerts \
     -storepass changeit -noprompt \
     -alias documentdb-cert \
     -file /etc/certs/global-bundle.pem
