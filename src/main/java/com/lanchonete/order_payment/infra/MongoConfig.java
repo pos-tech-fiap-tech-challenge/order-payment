@@ -16,8 +16,8 @@ import java.security.cert.X509Certificate;
 @Configuration
 public class MongoConfig {
 
-    @Bean
-    public MongoClient mongoClient() {
+//    @Bean
+//    public MongoClient mongoClient() {
 //        try {
 //            // Definir o caminho do TrustStore
 //            System.setProperty("javax.net.ssl.trustStore", "/opt/java/openjdk/lib/security/cacerts");
@@ -34,5 +34,5 @@ public class MongoConfig {
 //        } catch (Exception e) {
 //            throw new RuntimeException("Erro ao configurar conexão MongoDB com TLS", e);
 //        }
-    }
+//    }
 }
