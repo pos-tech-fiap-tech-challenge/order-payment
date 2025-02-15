@@ -24,10 +24,10 @@ public class MongoConfig {
             System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
 
             // Configurar conexão MongoDB com TLS
-            ConnectionString connectionString = new ConnectionString("mongodb://root:password@lanchonete-instance.c56iugywe6gv.us-east-1.docdb.amazonaws.com:27017/order_payment?tls=true&retryWrites=false");
-
+            String connectionString = "mongodb://root:password@lanchonete-instance.c56iugywe6gv.us-east-1.docdb.amazonaws.com:27017/order_payment?" +
+                    "tls=true&retryWrites=false&replicaSet=rs0&readPreference=secondaryPreferred";
             MongoClientSettings settings = MongoClientSettings.builder()
-                    .applyConnectionString(connectionString)
+                    .applyConnectionString(new ConnectionString(connectionString))
                     .build();
 
             return MongoClients.create(settings);
