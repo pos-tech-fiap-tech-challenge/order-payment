@@ -73,7 +73,3 @@ spec:
             requests:
               memory: "256Mi"
               cpu: "300m"
-          command: ["/bin/sh", "-c"]
-          args:
-            - cp /tmp/certs/global-bundle.pem /certs/global-bundle.pem &&
-              exec java -jar order-payment-app.jar
