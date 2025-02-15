@@ -15,3 +15,12 @@ metadata:
 type: Opaque
 data:
   MONGO_PASSWORD: cGFzc3dvcmQ=
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: java-opts
+  namespace: lanchonete
+type: Opaque
+data:
+  JAVA_OPTS: "LURkamF2YXgubmV0LnNzbC50cnVzdFN0b3JlPS9vcHQvamF2YS9vcGVuamRrL2xpYi9zZWN1cml0eS9jYWNlcnRzIC1EamF2YXgubmV0LnNzbC50cnVzdFN0b3JlUGFzc3dvcmQ9Y2hhbmdlaXQ="
