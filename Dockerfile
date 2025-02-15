@@ -18,7 +18,7 @@ FROM alpine/java:21-jdk
 
 WORKDIR /app
 
-# Copiar o certificado
+# Copiar o certificado do DocumentDB
 COPY global-bundle.pem /certs/global-bundle.pem
 
 # Importar o certificado no TrustStore do Java
@@ -28,11 +28,11 @@ RUN keytool -import -trustcacerts \
     -alias documentdb-cert \
     -file /certs/global-bundle.pem
 
+# Definir explicitamente o trustStore e trustStorePassword no Java no ENTRYPOINT
+ENTRYPOINT ["java", "-Djavax.net.ssl.trustStore=/opt/java/openjdk/lib/security/cacerts", "-Djavax.net.ssl.trustStorePassword=changeit", "-jar", "order-payment-app.jar"]
+
 # Copia o JAR gerado na fase de build
 COPY --from=build /app/target/order-payment-*.jar order-payment-app.jar
 
 # Expor a porta 8080
 EXPOSE 8080
-
-# Definir comando de inicialização
-ENTRYPOINT ["java", "-jar", "order-payment-app.jar"]
