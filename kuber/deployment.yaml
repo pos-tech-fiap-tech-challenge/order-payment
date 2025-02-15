@@ -21,6 +21,9 @@ spec:
         - name: documentdb-cert-volume
           secret:
             secretName: documentdb-cert
+            optional: false
+        - name: certs-dir
+          emptyDir: {}
       containers:
         - name: order-payment
           image: <ECR_REPOSITORY_URL>:latest
@@ -31,8 +34,10 @@ spec:
                 name: mongo-config
           volumeMounts:
             - name: documentdb-cert-volume
-              mountPath: "/certs"
+              mountPath: "/tmp/certs"
               readOnly: true
+            - name: certs-dir
+              mountPath: "/certs"
           livenessProbe:
             httpGet:
               path: /actuator/health
@@ -68,3 +73,7 @@ spec:
             requests:
               memory: "256Mi"
               cpu: "300m"
+          command: ["/bin/sh", "-c"]
+          args:
+            - cp /tmp/certs/global-bundle.pem /certs/global-bundle.pem &&
+              exec java -jar order-payment-app.jar
