@@ -5,8 +5,7 @@ metadata:
   namespace: lanchonete
 data:
   MONGO_USERNAME: root
-  MONGO_URI: "mongodb://lanchonete-instance.c56iugywe6gv.us-east-1.docdb.amazonaws.com:27017/order_payment?tls=true&tlsAllowInvalidCertificates=true&retryWrites=false"
-  environment: dev
+  MONGO_URI: "mongodb://lanchonete-instance.c56iugywe6gv.us-east-1.docdb.amazonaws.com:27017/order_payment?tls=true&ssl=true&sslCAFile=/certs/global-bundle.pem&retryWrites=false"
 ---
 apiVersion: v1
 kind: Secret

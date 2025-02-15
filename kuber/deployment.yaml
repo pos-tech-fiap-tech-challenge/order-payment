@@ -22,6 +22,13 @@ spec:
           image: <ECR_REPOSITORY_URL>:latest
           ports:
             - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: mongo-config
+          volumeMounts:
+            - name: documentdb-cert-volume
+              mountPath: "/certs"
+              readOnly: true
           livenessProbe:
             httpGet:
               path: /actuator/health
