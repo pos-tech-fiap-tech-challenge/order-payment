@@ -60,7 +60,7 @@ class PaymentOrderGatewayTest {
 
         assertNotNull(foundPayment);
         assertEquals(paymentEntity.getPaymentGateway(), foundPayment.getPaymentGateway());
-        assertEquals(paymentEntity.getOrderId(), foundPayment.getorderId());
+        assertEquals(paymentEntity.getOrderId(), foundPayment.getOrderId());
         assertEquals(paymentEntity.getPaymentStatus(), foundPayment.getPaymentStatus());
         verify(paymentRepository, times(1)).findPaymentByOrderId(orderId);
     }
