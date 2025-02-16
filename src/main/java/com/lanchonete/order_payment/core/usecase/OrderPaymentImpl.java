@@ -33,7 +33,7 @@ public class OrderPaymentImpl implements OrderPaymentUseCase {
                 .builder()
                 .paymentGateway(orderSnackRequest.getPaymentGateway())
                 .paymentStatus(PaymentStatus.OPPENED)
-                .orderSnackId(orderSnackRequest.getOrderId())
+                .orderId(orderSnackRequest.getOrderId())
                 .build();
 
         paymentOrderRepository.savePaymentOrder(paymentSave);
@@ -46,7 +46,7 @@ public class OrderPaymentImpl implements OrderPaymentUseCase {
             OrderSnackPaymentStatus mercadoPagoOrderData = paymentGateway.getOrderData(notification.data().id());
             var paymentUpdate = paymentOrderRepository.findPaymentByOrderId(mercadoPagoOrderData.getExternalOrderId());
             paymentUpdate.setPaymentStatus(generatePaymentStatus(mercadoPagoOrderData.getPaymentStatus()));
-            orderGateway.updateOrderStatus(paymentUpdate.getPaymentStatus());
+            orderGateway.updateOrderStatus(paymentUpdate.getPaymentStatus(), String.valueOf(paymentUpdate.getOrderId()));
             paymentOrderRepository.savePaymentOrder(paymentUpdate);
         } catch (Exception e) {
             throw new RuntimeException("Error updating payment status: " + e.getMessage());

@@ -3,7 +3,6 @@ package com.lanchonete.order_payment.adapters.gateways;
 import com.lanchonete.order_payment.core.enums.PaymentStatus;
 import com.lanchonete.order_payment.core.usecase.interfaces.out.OrderGateway;
 import com.lanchonete.order_payment.infra.exceptions.OrderUpdateException;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +24,10 @@ public class OrderIntegrationGateway implements OrderGateway {
     }
 
     @Override
-    public void updateOrderStatus(PaymentStatus paymentStatus) {
+    public void updateOrderStatus(PaymentStatus paymentStatus, String orderId) {
         try {
-            ResponseEntity<String> response = restTemplate.postForEntity(UPDATE_ORDER_PATH, paymentStatus, String.class);
+            var finalConnectionURL = UPDATE_ORDER_PATH.replace("{orderId}", orderId);
+            ResponseEntity<String> response = restTemplate.postForEntity(finalConnectionURL, paymentStatus, String.class);
 
             if (response.getStatusCode().is2xxSuccessful()) {
                 log.info("Status do pedido atualizado com sucesso: {}", response.getBody());

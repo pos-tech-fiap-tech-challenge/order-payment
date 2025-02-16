@@ -21,7 +21,7 @@ public class PaymentOrderGateway implements PaymentOrderRepository {
                 .builder()
                 .paymentGateway(payment.getPaymentGateway())
                 .paymentStatus(PaymentStatus.OPPENED)
-                .orderId(payment.getOrderSnackId())
+                .orderId(payment.getOrderId())
                 .build();
         paymentRepository.save(paymentSave);
     }
@@ -32,7 +32,7 @@ public class PaymentOrderGateway implements PaymentOrderRepository {
 
         return Payment.builder()
                 .paymentType(paymentEntity.getPaymentType())
-                .orderSnackId(paymentEntity.getOrderId())
+                .orderId(paymentEntity.getOrderId())
                 .paymentStatus(paymentEntity.getPaymentStatus())
                 .paymentGateway(paymentEntity.getPaymentGateway())
                 .build();

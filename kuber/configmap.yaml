@@ -1,26 +1,26 @@
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: mongo-config
-  namespace: lanchonete
-data:
-  MONGO_USERNAME: root
-  MONGO_URI: "mongodb://root:password@lanchonete-instance.c56iugywe6gv.us-east-1.docdb.amazonaws.com:27017/order_payment?tls=true&retryWrites=false"
----
-apiVersion: v1
 kind: Secret
 metadata:
   name: mongo-secret
   namespace: lanchonete
-type: Opaque
 data:
-  MONGO_PASSWORD: cGFzc3dvcmQ=
+  MONGO_USERNAME: lanchonete
+  MONGO_URI: "bW9uZ29kYitzcnY6Ly9sYW5jaG9uZXRlOiU0MExhbmNob25ldGUxMjNAbGFuY2hvbmV0ZS5qcGdtdC5tb25nb2RiLm5ldC9vcmRlcl9wYXltZW50P3JldHJ5V3JpdGVzPXRydWUmdz1tYWpvcml0eSZhcHBOYW1lPUxhbmNob25ldGU="
 ---
 apiVersion: v1
-kind: Secret
+kind: ConfigMap
 metadata:
-  name: java-opts
+  name: order-config
   namespace: lanchonete
-type: Opaque
 data:
-  JAVA_OPTS: "LURkamF2YXgubmV0LnNzbC50cnVzdFN0b3JlPS9vcHQvamF2YS9vcGVuamRrL2xpYi9zZWN1cml0eS9jYWNlcnRzIC1EamF2YXgubmV0LnNzbC50cnVzdFN0b3JlUGFzc3dvcmQ9Y2hhbmdlaXQ="
+  ORDER_URL: http://localhost:8080
+#---
+#apiVersion: v1
+#kind: Secret
+#metadata:
+#  name: mongo-secret
+#  namespace: lanchonete
+#type: Opaque
+#data:
+#  MONGO_PASSWORD: JTQwTGFuY2hvbmV0ZTEyMw==
+#---
