@@ -28,21 +28,21 @@ class PaymentOrderGatewayTest {
 
     private Payment payment;
     private PaymentEntity paymentEntity;
-    private UUID orderSnackId;
+    private UUID orderId;
 
     @BeforeEach
     void setUp() {
-        orderSnackId = UUID.randomUUID();
+        orderId = UUID.randomUUID();
 
         payment = Payment.builder()
                 .paymentGateway(PaymentGateway.PAGSEGURO)
-                .orderSnackId(orderSnackId)
+                .orderId(orderId)
                 .build();
 
         paymentEntity = PaymentEntity.builder()
                 .paymentGateway(PaymentGateway.MERCADO_PAGO)
                 .paymentStatus(PaymentStatus.OPPENED)
-                .orderId(orderSnackId)
+                .orderId(orderId)
                 .build();
     }
 
@@ -54,14 +54,14 @@ class PaymentOrderGatewayTest {
 
     @Test
     void shouldFindPaymentByOrderId() {
-        when(paymentRepository.findPaymentByOrderId(orderSnackId)).thenReturn(paymentEntity);
+        when(paymentRepository.findPaymentByOrderId(orderId)).thenReturn(paymentEntity);
 
-        Payment foundPayment = paymentOrderGateway.findPaymentByOrderId(orderSnackId);
+        Payment foundPayment = paymentOrderGateway.findPaymentByOrderId(orderId);
 
         assertNotNull(foundPayment);
         assertEquals(paymentEntity.getPaymentGateway(), foundPayment.getPaymentGateway());
-        assertEquals(paymentEntity.getOrderId(), foundPayment.getOrderSnackId());
+        assertEquals(paymentEntity.getOrderId(), foundPayment.getorderId());
         assertEquals(paymentEntity.getPaymentStatus(), foundPayment.getPaymentStatus());
-        verify(paymentRepository, times(1)).findPaymentByOrderId(orderSnackId);
+        verify(paymentRepository, times(1)).findPaymentByOrderId(orderId);
     }
 }

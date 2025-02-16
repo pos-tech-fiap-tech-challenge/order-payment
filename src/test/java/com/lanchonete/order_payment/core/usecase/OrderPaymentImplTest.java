@@ -47,9 +47,9 @@ class OrderPaymentImplTest {
 
     @BeforeEach
     void setUp() {
-        UUID orderSnackId = UUID.randomUUID();
+        UUID orderId = UUID.randomUUID();
         orderSnackRequest = OrderDTO.builder()
-                .orderId(orderSnackId)
+                .orderId(orderId)
                 .build();
 
         qrCodeData = new QRCodeData("qrCodeSampleData", "");
@@ -59,7 +59,7 @@ class OrderPaymentImplTest {
         );
 
         orderSnackPaymentStatus = OrderSnackPaymentStatus.builder()
-                .externalOrderId(orderSnackId)
+                .externalOrderId(orderId)
                 .paymentStatus("approved")
                 .build();
     }
@@ -82,7 +82,7 @@ class OrderPaymentImplTest {
     void shouldUpdatePaymentStatusSuccessfully() {
         when(paymentGateway.getOrderData(paymentNotification.data().id())).thenReturn(orderSnackPaymentStatus);
         Payment payment = Payment.builder()
-                .orderSnackId(orderSnackPaymentStatus.getExternalOrderId())
+                .orderId(orderSnackPaymentStatus.getExternalOrderId())
                 .paymentStatus(PaymentStatus.OPPENED)
                 .build();
         when(paymentOrderRepository.findPaymentByOrderId(orderSnackPaymentStatus.getExternalOrderId())).thenReturn(payment);
