@@ -38,7 +38,7 @@ class OrderIntegrationGatewayTest {
         when(restTemplate.postForEntity(anyString(), any(PaymentStatus.class), any()))
                 .thenReturn(new ResponseEntity<>("Success", HttpStatus.OK));
 
-        assertDoesNotThrow(() -> orderIntegrationGateway.updateOrderStatus(paymentStatus));
+        assertDoesNotThrow(() -> orderIntegrationGateway.updateOrderStatus(paymentStatus, ""));
 
         verify(restTemplate, times(1))
                 .postForEntity(anyString(), any(PaymentStatus.class), any());
@@ -51,7 +51,7 @@ class OrderIntegrationGatewayTest {
         when(restTemplate.postForEntity(anyString(), any(PaymentStatus.class), any()))
                 .thenReturn(new ResponseEntity<>("Failure", HttpStatus.BAD_REQUEST));
 
-        assertDoesNotThrow(() -> orderIntegrationGateway.updateOrderStatus(paymentStatus));
+        assertDoesNotThrow(() -> orderIntegrationGateway.updateOrderStatus(paymentStatus,  ""));
 
         verify(restTemplate, times(1))
                 .postForEntity(anyString(), any(PaymentStatus.class), any());
@@ -65,7 +65,7 @@ class OrderIntegrationGatewayTest {
                 .thenThrow(new RuntimeException("Erro na API"));
 
         Exception exception = assertThrows(OrderUpdateException.class, () ->
-                orderIntegrationGateway.updateOrderStatus(paymentStatus));
+                orderIntegrationGateway.updateOrderStatus(paymentStatus, "123"));
 
         assertTrue(exception.getMessage().contains("Erro inesperado ao atualizar status do pedido"));
 

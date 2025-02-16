@@ -15,5 +15,5 @@ public class Payment {
     private PaymentStatus paymentStatus;
     private PaymentGateway paymentGateway;
     private PaymentType paymentType;
-    private UUID orderSnackId;
+    private UUID orderId;
 }
