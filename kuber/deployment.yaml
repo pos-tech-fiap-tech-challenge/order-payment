@@ -51,26 +51,16 @@ spec:
             initialDelaySeconds: 120
             periodSeconds: 10
           env:
-            - name: JAVA_OPTS
+            - name: ORDER_INTEGRATION_URL
               valueFrom:
-                secretKeyRef:
-                  name: java-opts
-                  key: JAVA_OPTS
+                configMapKeyRef:
+                  name: order-config
+                  key: ORDER_URL
             - name: SPRING_DATA_MONGODB_URI
-              valueFrom:
-                configMapKeyRef:
-                  name: mongo-config
-                  key: MONGO_URI
-            - name: SPRING_DATA_MONGODB_USERNAME
-              valueFrom:
-                configMapKeyRef:
-                  name: mongo-config
-                  key: MONGO_USERNAME
-            - name: SPRING_DATA_MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mongo-secret
-                  key: MONGO_PASSWORD
+                  key: MONGO_URI
           resources:
             limits:
               memory: "512Mi"
@@ -80,8 +70,7 @@ spec:
               cpu: "300m"
           command: ["/bin/sh", "-c"]
           args:
-            - "cp /tmp/certs/global-bundle.pem /certs/global-bundle.pem &&
-               exec java $JAVA_OPTS -Djavax.net.debug=ssl -jar order-payment-app.jar"
+            - "exec java $JAVA_OPTS -Djavax.net.debug=ssl -jar order-payment-app.jar"
 
 
 
