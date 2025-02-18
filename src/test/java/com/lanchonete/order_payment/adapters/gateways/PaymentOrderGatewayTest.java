@@ -42,7 +42,7 @@ class PaymentOrderGatewayTest {
         paymentEntity = PaymentEntity.builder()
                 .paymentGateway(PaymentGateway.MERCADO_PAGO)
                 .paymentStatus(PaymentStatus.OPPENED)
-                .orderId(orderId)
+                .orderId(String.valueOf(orderId))
                 .build();
     }
 
