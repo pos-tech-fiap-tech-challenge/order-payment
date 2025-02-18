@@ -56,7 +56,7 @@ public class OrderPaymentImpl implements OrderPaymentUseCase {
 
     private PaymentStatus generatePaymentStatus(String status) {
         return switch (status) {
-            case "approved" -> PaymentStatus.APPROVED;
+            case "closed" -> PaymentStatus.APPROVED;
             case "opened" -> PaymentStatus.OPPENED;
             case "expired" -> PaymentStatus.EXPIRED;
             default ->
