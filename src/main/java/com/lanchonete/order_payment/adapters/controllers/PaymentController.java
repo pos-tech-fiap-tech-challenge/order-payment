@@ -68,7 +68,7 @@ public class PaymentController {
     )
     @PostMapping("/notifications")
     @ResponseStatus(HttpStatus.CREATED)
-    public void updatePaymentStatus(@RequestParam PaymentNotification notification) throws JsonProcessingException {
+    public void updatePaymentStatus(@RequestBody PaymentNotification notification) throws JsonProcessingException {
         String not = new ObjectMapper().writeValueAsString(notification);
         if (notification.data().id().isBlank()) {
             log.error("Notification {} not found", not);
