@@ -28,7 +28,8 @@ public class PaymentOrderGateway implements PaymentOrderRepository {
 
     @Override
     public Payment findPaymentByOrderId(UUID orderId) {
-        var paymentEntity = paymentRepository.findPaymentByOrderId(orderId);
+        String orderIdString = String.valueOf(orderId);
+        var paymentEntity = paymentRepository.findPaymentByOrderId(orderIdString);
 
         return Payment.builder()
                 .paymentType(paymentEntity.getPaymentType())
