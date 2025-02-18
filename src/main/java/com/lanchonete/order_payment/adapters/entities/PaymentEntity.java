@@ -23,5 +23,5 @@ public class PaymentEntity {
     private PaymentStatus paymentStatus;
     private PaymentGateway paymentGateway;
     private PaymentType paymentType;
-    private UUID orderId;
+    private String orderId;
 }
