@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lanchonete.order_payment.adapters.dto.OrderDTO;
 import com.lanchonete.order_payment.core.domain.PaymentNotification;
+import com.lanchonete.order_payment.core.domain.PaymentNotificationData;
 import com.lanchonete.order_payment.core.usecase.interfaces.in.OrderPaymentUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.management.Notification;
 
 /**
  * Controlador responsável pelas operações relacionadas a pagamentos,
@@ -68,13 +71,12 @@ public class PaymentController {
     )
     @PostMapping("/notifications")
     @ResponseStatus(HttpStatus.CREATED)
-    public void updatePaymentStatus(@RequestBody @Valid PaymentNotification notification) throws JsonProcessingException {
-        String not = new ObjectMapper().writeValueAsString(notification);
-        if (notification.data().id().isBlank()) {
-            log.error("Notification {} not found", not);
-            return;
-        }
-        log.info("New notification arrived - {}: ", not);
+    public void updatePaymentStatus(@RequestParam("id") String idPagamento) throws JsonProcessingException {
+
+        PaymentNotification notification = new PaymentNotification(
+                new PaymentNotificationData(idPagamento)
+        );
+        log.info("New notification arrived - {}: ", idPagamento);
         paymentUseCase.updatePaymentStatus(notification);
     }
 }
