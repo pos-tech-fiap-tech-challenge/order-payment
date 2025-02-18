@@ -20,7 +20,7 @@ public class PaymentOrderGateway implements PaymentOrderRepository {
         var paymentSave = PaymentEntity
                 .builder()
                 .paymentGateway(payment.getPaymentGateway())
-                .paymentStatus(PaymentStatus.OPPENED)
+                .paymentStatus(payment.getPaymentStatus())
                 .orderId(String.valueOf(payment.getOrderId()))
                 .build();
         paymentRepository.save(paymentSave);
