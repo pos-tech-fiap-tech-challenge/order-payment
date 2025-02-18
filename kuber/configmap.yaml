@@ -12,4 +12,4 @@ metadata:
   name: order-config
   namespace: lanchonete
 data:
-  ORDER_URL: http://localhost:8080
+  ORDER_URL: http://aecceb46beb6b431c8fd64ecbbf09bc8-1231354151.us-east-1.elb.amazonaws.com
