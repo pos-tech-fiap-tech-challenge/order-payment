@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lanchonete.order_payment.adapters.dto.OrderDTO;
 import com.lanchonete.order_payment.core.domain.PaymentNotification;
+import com.lanchonete.order_payment.core.domain.PaymentNotificationData;
 import com.lanchonete.order_payment.core.usecase.interfaces.in.OrderPaymentUseCase;
+import com.mongodb.lang.Nullable;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -68,13 +70,12 @@ public class PaymentController {
     )
     @PostMapping("/notifications")
     @ResponseStatus(HttpStatus.CREATED)
-    public void updatePaymentStatus(@RequestBody PaymentNotification notification) throws JsonProcessingException {
-        String not = new ObjectMapper().writeValueAsString(notification);
-        if (notification.data().id().isBlank()) {
-            log.error("Notification {} not found", not);
-            return;
-        }
-        log.info("New notification arrived - {}: ", not);
+    public void updatePaymentStatus(@RequestParam("id") String paymentId, @RequestBody @Nullable Object bodyMessage) throws JsonProcessingException {
+        log.info("Body message {}", bodyMessage);
+        log.info("New notification arrived - {}: ", paymentId);
+        PaymentNotification notification = new PaymentNotification(
+                new PaymentNotificationData(paymentId)
+        );
         paymentUseCase.updatePaymentStatus(notification);
     }
 }
